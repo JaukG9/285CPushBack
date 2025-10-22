@@ -38,14 +38,10 @@ void aReleased(){
 }
 
 void axisLTChanged(){
-    if(Controller.Axis3.position() > 5){
-        leftMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
-    }
+    leftMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
 }
 void axisRTChanged(){
-    if(Controller.Axis2.position() > 5){
-        rightMotors.spin(reverse, 6 * Controller.Axis3.position(), rpm);
-    }
+    rightMotors.spin(reverse, 6 * Controller.Axis3.position(), rpm);
 }
 /*
 void axisLSChanged(){
