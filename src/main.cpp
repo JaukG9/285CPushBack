@@ -27,16 +27,25 @@ motor Motor6 = motor(PORT13, ratio6_1, true);
 motor_group leftMotors = motor_group(Motor1, Motor2, Motor3);
 motor_group rightMotors = motor_group(Motor4, Motor5, Motor6);
 
+motor Intake = motor(PORT20, false);
+
 drivetrain DriveTrain = drivetrain(leftMotors, rightMotors, 260, 285, 252, mm, 48/36);
 
-// button a
-void aPressed(){
-    //DriveTrain.drive(forward, 600, rpm);
+// shoulder buttons
+void r1Pressed(){
+    Intake.spin(forward, 200, rpm);
 }
-void aReleased(){
-    DriveTrain.stop();
+void r1Released(){
+    Intake.stop();
+}
+void r2Pressed(){
+    Intake.spin(reverse, 200, rpm);
+}
+void r2Released(){
+    Intake.stop();
 }
 
+// joysticks (tank drive)
 void axisLTChanged(){
     leftMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
 }
@@ -55,8 +64,10 @@ void axisRSChanged(){
 int main() {
     while(1) {
         Brain.Screen.clearScreen();
-        Controller.ButtonA.pressed(aPressed);
-        Controller.ButtonA.released(aReleased);
+        Controller.ButtonR1.pressed(r1Pressed);
+        Controller.ButtonR1.released(r1Released);
+        Controller.ButtonR2.pressed(r2Pressed);
+        Controller.ButtonR2.released(r2Released);
 
         Controller.Axis3.changed(axisLTChanged);
         Controller.Axis2.changed(axisRTChanged);
