@@ -41,7 +41,7 @@ void axisLTChanged(){
     leftMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
 }
 void axisRTChanged(){
-    rightMotors.spin(reverse, 6 * Controller.Axis3.position(), rpm);
+    rightMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
 }
 /*
 void axisLSChanged(){
