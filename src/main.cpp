@@ -26,6 +26,7 @@ motor_group leftMotors = motor_group(Motor1, Motor2, Motor3);
 motor_group rightMotors = motor_group(Motor4, Motor5, Motor6);
 
 motor Intake = motor(PORT20, false);
+bool reverseDrive = false;
 
 drivetrain DriveTrain = drivetrain(leftMotors, rightMotors, 260, 285, 252, mm, 48/36);
 
@@ -43,12 +44,17 @@ void r2Released(){
     Intake.stop();
 }
 
+void l2Pressed(){
+    reverseDrive = !reverseDrive;
+}
+
 // joysticks (tank drive)
+/* maybe inlcude gears to make rpm less erratic */
 void axisLTChanged(){
-    leftMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
+    leftMotors.spin(reverseDrive ? reverse : forward, 6 * Controller.Axis3.position(), rpm);
 }
 void axisRTChanged(){
-    rightMotors.spin(forward, 6 * Controller.Axis2.position(), rpm);
+    rightMotors.spin(reverseDrive ? reverse : forward, 6 * Controller.Axis2.position(), rpm);
 }
 
 /*
@@ -72,6 +78,7 @@ int main() {
         Controller.ButtonR1.released(r1Released);
         Controller.ButtonR2.pressed(r2Pressed);
         Controller.ButtonR2.released(r2Released);
+        Controller.ButtonL2.pressed(l2Pressed);
 
         Controller.Axis3.changed(axisLTChanged);
         Controller.Axis2.changed(axisRTChanged);
