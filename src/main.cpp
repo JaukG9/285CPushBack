@@ -7,9 +7,7 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 #include "vex.h"
-
 using namespace vex;
-
 
 // A global instance of vex::brain used for printing to the V5 brain screen
 vex::brain       Brain;
@@ -31,7 +29,7 @@ motor Intake = motor(PORT20, false);
 
 drivetrain DriveTrain = drivetrain(leftMotors, rightMotors, 260, 285, 252, mm, 48/36);
 
-// shoulder buttons
+// shoulder buttons (intake & conveyer)
 void r1Pressed(){
     Intake.spin(forward, 200, rpm);
 }
@@ -52,6 +50,7 @@ void axisLTChanged(){
 void axisRTChanged(){
     rightMotors.spin(forward, 6 * Controller.Axis3.position(), rpm);
 }
+
 /*
 void axisLSChanged(){
     leftDrive(axisLS);
@@ -63,7 +62,12 @@ void axisRSChanged(){
 // main
 int main() {
     while(1) {
+        //print intake state to screen
         Brain.Screen.clearScreen();
+        Brain.Screen.setCursor(10, 50);
+        Brain.Screen.print(Intake.isSpinning());
+
+        //input (shoulders + joysticks)
         Controller.ButtonR1.pressed(r1Pressed);
         Controller.ButtonR1.released(r1Released);
         Controller.ButtonR2.pressed(r2Pressed);
@@ -72,7 +76,7 @@ int main() {
         Controller.Axis3.changed(axisLTChanged);
         Controller.Axis2.changed(axisRTChanged);
 
-        // Allow other tasks to run
+        //don't run too many actions
         this_thread::sleep_for(10);
     }
 }
