@@ -104,7 +104,8 @@ void opcontrol(){
 		chassis.tank(axisL, axisR); // tank drive
 
         /* intake + conveyer */
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) intake.move_velocity(600); // intake motors
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) intake.move_velocity(600); // intake motors
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) intake.move_velocity(-600);
         else intake.brake();
 
         /* extake (may need to change due to wattage limitations) */
