@@ -5,11 +5,10 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 /* initialization of motors & pistons */
 pros::Motor intake(-1, pros::MotorGearset::blue); // spins intake clockwise
-pros::Motor extakeT(20); // spins extake counterclockwise - may need to combine extakes due to power limits
-pros::Motor extakeM(19); // spins extake counterclockwise - may need to combine extakes due to power limits
+pros::Motor extakeT(20); // spins extake counterclockwise
 pros::MotorGroup left_mg({-3, -4, -5}, pros::MotorGearset::blue); // left motor group (clockwise --> omni = counterclockwise)
 pros::MotorGroup right_mg({8, 9, 10}, pros::MotorGearset::blue); // right motor group (counterclockwise --> omni = clockwise)
-//pros::ADIDigitalOut scraper(11); // extends scraper piston
+pros::ADIDigitalOut scraper('G'); // extends scraper piston
 pros::ADIDigitalOut midtake('H'); // extends midtake piston*/
 
 /* creation of drivetrain */
@@ -22,18 +21,22 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 );
 
 /* odometry */
-pros::Imu imu(2); // imu
+pros::Imu imu(11); // imu
+
+/*
 pros::Rotation horizontal_encoder(20); // horizontal tracking wheel encoder
 pros::adi::Encoder vertical_encoder('C', 'D', true); // vertical tracking wheel encoder
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75); // horizontal tracking wheel
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -2.5); // vertical tracking wheel
+*/
 
 // odometry settings
-lemlib::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel 1, set to null
-                            nullptr, // vertical tracking wheel 2, set to nullptr as we are using IMEs
-                            &horizontal_tracking_wheel, // horizontal tracking wheel 1
-                            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
-                            &imu // inertial sensor
+lemlib::OdomSensors sensors(
+    nullptr,  // vertical tracking wheel 1
+    nullptr,  // vertical tracking wheel 2
+    nullptr,  // horizontal tracking wheel 1
+    nullptr,  // horizontal tracking wheel 2
+    &imu // inertial sensor
 );
 
 // lateral PID controller
@@ -70,6 +73,7 @@ lemlib::Chassis chassis(drivetrain, // drivetrain settings
                         lateral_controller, // lateral PID settings
                         angular_controller, // angular PID settings
                         sensors, // odometry sensors
+                        &steer_curve,
                         &steer_curve
 );
 
@@ -82,30 +86,56 @@ void initialize(){
 	chassis.calibrate();
 }
 
-
 void disabled(){}
 
-
 void autonomous(){
-    /* left intake */
-    /*chassis.setPose(-48.32, 16.57, 78);
-    intake.move_velocity(600);
-    chassis.moveToPose(-24, 22, 68, 2000);
-    chassis.moveToPose(-13.61, 27.5, 330, 1200);
-    intake.brake();
-    chassis.moveToPose(-30.28, 36.79, 290, 1800);
-    chassis.moveToPose(-42.5, 43.5, 315, 1200);
-    chassis.moveToPose(-18, 18, 315, 2000);*/
+    /* left auton */
+    chassis.setPose(-48.32, 16.57, 78);
 
-    /* right intake */
+    /* right auton */
     chassis.setPose(-48.32, -16.57, 102);
-    intake.move_velocity(600);
     chassis.moveToPose(-14.86, -24.39, 102, 2000);
-    chassis.moveToPose(-37.21, -36.27, 45, 2000);
-    chassis.moveToPose(-18, -18, 45, 1500);
+    pros::delay(200);
+    intake.move_velocity(600);
+    chassis.moveToPose(-31, -31, 45, 2000, {.forwards = false});
+    pros::delay(300);
+    intake.brake();
+    chassis.moveToPose(-5, -5, 45, 1500);
+    pros::delay(800);
     intake.move_velocity(-600);
+    pros::delay(1000);
+    intake.brake();
+    chassis.moveToPose(-36.29, -40.77, 245, 2000);
+    chassis.moveToPose(-45, -47.33, 270, 2500);
+    chassis.moveToPose(-60.61, -47.33, 270, 1500);
+    scraper.set_value(true);
+    intake.move_velocity(600);
+    pros::delay(750);
+    chassis.moveToPose(-5.55, -47.33, 270, 4000, {.forwards = false});
+    pros::delay(1200);
+    scraper.set_value(false);
+    extakeT.move_velocity(600);
+    pros::delay(2500);
+    intake.brake();
+
+    /* skip auton
+    chassis.setPose(0, 0, 0);
+    chassis.moveToPoint(0, 5, 150000);
+    */
 }
 
+void intakeConveyer(){
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) intake.move_velocity(600); // intake motors forward
+    else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) intake.move_velocity(-600); // low extake
+    else intake.brake();
+}
+void extake(){
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+        extakeT.move_velocity(600);
+        intake.move_velocity(600);
+    }else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) extakeT.move_velocity(-600);
+    else{extakeT.brake();}
+}
 
 void opcontrol(){
 	int axisL = 0;
@@ -113,9 +143,10 @@ void opcontrol(){
     bool scraperExtended = false;
     bool midtakeExtended = false;
     int sCount = 0;
+    int mCount = 0;
 
 	while (true) {
-		pros::lcd::print(0, "%d %d", axisL, axisR);
+		pros::lcd::print(0, "%d %d %d", 0.3, axisL, axisR);
 		
 		/* drive */
 		axisL = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Gets amount forward/backward from left joystick
@@ -123,28 +154,22 @@ void opcontrol(){
 		chassis.tank(axisL, axisR); // tank drive
 
         /* intake + conveyer */
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) intake.move_velocity(600); // intake motors forward
-        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) intake.move_velocity(-600); // low extake
-        else intake.brake();
+        intakeConveyer();
 
-        /* extake (may need to change due to wattage limitations) */
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-            extakeT.move_velocity(600);
-            intake.move_velocity(600);
-        }else extakeT.brake();
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) extakeM.move_velocity(600);
-        else extakeM.brake();
+        /* extake (top & mid) */
+        extake();
 
-        /* pistons - will finish with a toggle later
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-            scraperExtended = !scraperExtended;
-            scraper.set_value(scraperExtended);
-        }*/
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && sCount > 50){
+        /* pistons (scraper & midtake) */
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && mCount > 25){
             midtakeExtended = !midtakeExtended;
             midtake.set_value(midtakeExtended);
+            mCount = 0;
+        }else if(mCount <= 25){mCount++;}
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && sCount > 25){
+            scraperExtended = !scraperExtended;
+            scraper.set_value(scraperExtended);
             sCount = 0;
-        }else if(sCount <= 50){sCount++;}
+        }else if(sCount <= 25){sCount++;}
 
 		pros::delay(20); // 20 ms downtime
 	}
