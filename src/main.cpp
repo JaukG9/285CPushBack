@@ -8,8 +8,8 @@ pros::Motor intake(-1, pros::MotorGearset::blue); // spins intake clockwise
 pros::Motor extakeT(20); // spins extake counterclockwise
 pros::MotorGroup left_mg({-3, -4, -5}, pros::MotorGearset::blue); // left motor group (clockwise --> omni = counterclockwise)
 pros::MotorGroup right_mg({8, 9, 10}, pros::MotorGearset::blue); // right motor group (counterclockwise --> omni = clockwise)
-pros::ADIDigitalOut scraper('G'); // extends scraper piston
-pros::ADIDigitalOut midtake('H'); // extends midtake piston*/
+pros::ADIDigitalOut scraper('H'); // extends scraper piston
+pros::ADIDigitalOut midtake('G'); // extends midtake piston*/
 
 /* creation of drivetrain */
 lemlib::Drivetrain drivetrain(&left_mg, // left motor group
@@ -84,15 +84,45 @@ void on_center_button(){}
 void initialize(){
 	pros::lcd::initialize();
 	chassis.calibrate();
+
+    midtake.set_value(true);
 }
 
 void disabled(){}
 
 void autonomous(){
-    /* left auton */
-    chassis.setPose(-48.32, 16.57, 78);
+    /* revised right
+    chassis.setPose(-48.32, -16.57, 102);
+    chassis.moveToPose(-14.86, -24.39, 102, 2000);
+    pros::delay(600);
+    intake.move_velocity(600);
+    pros::delay(500);
+    chassis.moveToPose(-5, -5, 45, 1200);
+    intake.move_velocity(-600);
+    pros::delay(1800);
+    chassis.moveToPose(-36, -42, 0, 2000, {.forwards = false});
+    chassis.turnToHeading(270, 800);
+    intake.move_velocity(600);
+    scraper.set_value(true);
+    chassis.moveToPose(-64, -42, 270, 1000);
+    pros::delay(2000);
+    chassis.moveToPose(-5.55, -42, 270, 1000, {.forwards = false});
+    pros::delay(800);
+    extakeT.move_velocity(600); */
 
-    /* right auton */
+    /* left auton
+    chassis.setPose(-48.32, 16.57, 78);
+    chassis.moveToPose(-14.86, 24.39, 78, 2000);
+    pros::delay(600);
+    intake.move_velocity(600);
+    pros::delay(800);
+    chassis.moveToPose(-60.61, 47.33, 270, 2000);
+    pros::delay(200);
+    chassis.moveToPose(-5.55, 47.33, 270, 3000, {.forwards = false});
+    pros::delay(3000);
+    extakeT.move_velocity(600); */
+    
+    /* right auton
     chassis.setPose(-48.32, -16.57, 102);
     chassis.moveToPose(-14.86, -24.39, 102, 2000);
     pros::delay(200);
@@ -104,23 +134,94 @@ void autonomous(){
     pros::delay(800);
     intake.move_velocity(-600);
     pros::delay(1000);
-    intake.brake();
-    chassis.moveToPose(-36.29, -40.77, 245, 2000);
-    chassis.moveToPose(-45, -47.33, 270, 2500);
-    chassis.moveToPose(-60.61, -47.33, 270, 1500);
+    intake.brake(); */
+    
+
+    /* skills auton - left start  -------------  maximum total time to take */
+        //** left alliance side /
+    chassis.setPose(-48, 16, 0);
     scraper.set_value(true);
+    chassis.moveToPose(-64, 47, 270, 2000);                         // 2 sec
     intake.move_velocity(600);
-    pros::delay(750);
-    chassis.moveToPose(-5.55, -47.33, 270, 4000, {.forwards = false});
-    pros::delay(1200);
+    pros::delay(4000);                                              // 6 sec
     scraper.set_value(false);
+    chassis.moveToPoint(-42, 47, 270, {.forwards = false});         // 7 sec
+    chassis.turnToHeading(45, 600);                                 // 7.6 sec
+    chassis.moveToPoint(-28.497, 59.905, 90);                       
+    chassis.moveToPoint(45, 59.905, 90);                            // 10.4 sec
+    chassis.turnToHeading(45, 600);                                 // 11 sec
+    chassis.moveToPose(30, 47, 90, 1000, {.forwards = false});      // 12 sec
+    pros::delay(600);                                               // 12.6 sec
     extakeT.move_velocity(600);
-    pros::delay(2500);
+    pros::delay(2000);                                              // 14.6 sec
+    extakeT.brake();
+        //** left opponent side /
+    scraper.set_value(true);
+    chassis.moveToPose(64, 47, 90, 1000);                           // 15.6 sec
+    pros::delay(4000);                                              // 19.6 sec
+    scraper.set_value(false);
+    chassis.moveToPose(30, 47, 90, 1000, {.forwards = false});      // 20.6 sec
+    pros::delay(600);                                               // 21.2 sec
+    extakeT.move_velocity(600);
+    pros::delay(2000);                                              // 23.2 sec
     intake.brake();
+    extakeT.brake();
+        //** right opponent side /
+    chassis.moveToPoint(40.624, -16.735, 180);                      // 26 sec
+    scraper.set_value(true);
+    chassis.moveToPose(64, -47, 90, 1000);                          // 27 sec
+    intake.move_velocity(600);
+    pros::delay(4000);                                              // 31 sec
+    scraper.set_value(false);
+    chassis.moveToPose(42, -47, 90, 1000, {.forwards = false});     // 32 sec
+    chassis.turnToHeading(215, 600);                                // 32.6 sec
+    chassis.moveToPoint(28.497, -59.905, 270);
+    chassis.moveToPoint(-45, -59.905, 270);                         // 35.4 sec
+    chassis.turnToHeading(215, 600);                                // 36 sec
+    chassis.moveToPose(-30, -47, 270, 1000);                        // 37 sec
+    pros::delay(600);                                               // 37.6 sec
+    extakeT.move_velocity(600);
+    pros::delay(2000);                                              // 39.6 sec
+    extakeT.brake();
+        //** right alliance side /
+    scraper.set_value(true);
+    chassis.moveToPose(-64, -47, 270, 1000);                        // 40.6 sec
+    pros::delay(4000);                                              // 44.6 sec
+    scraper.set_value(false);
+    chassis.moveToPose(-30, -47, 270, 1000, {.forwards = false});   // 45.6 sec
+    pros::delay(600);                                               // 46.2 sec
+    extakeT.move_velocity(600);
+    pros::delay(2000);                                              // 48.2 sec
+    intake.brake();
+    extakeT.brake();
+        //** center goals /
+    chassis.moveToPoint(-47, -47, 270);                             // 50.25 sec
+    chassis.turnToHeading(45, 750);                                 // 51 sec
+    intake.move_velocity(600);
+    chassis.moveToPose(-13, -13, 45, 2000);                         // 53 sec
+    pros::delay(600);                                               // 53.6 sec
+    intake.move_velocity(-600);
+    pros::delay(2400);                                              // 56 sec
+    intake.brake();
+        //** clear and park /
+    chassis.moveToPose(-14.5, -24, 340, 800, {.forwards = false});  // 56.8 sec
+    chassis.moveToPoint(-45, 0, 270);                               // 58 sec
+    scraper.set_value(true);
+    chassis.moveToPose(-62, 0, 270, 10000);                         // until end
+    intake.move_velocity(600);
+    extakeT.move_velocity(600);                                     // end
+        //** ideally 79 points /
+    // */
+
 
     /* skip auton
-    chassis.setPose(0, 0, 0);
-    chassis.moveToPoint(0, 5, 150000);
+    chassis.setPose(0, -15, 0);
+    intake.move_velocity(-600);
+    chassis.moveToPoint(0, 15, 10000);
+    chassis.moveToPoint(0, 0, 10000, {.forwards = false}); */
+
+    /* 
+    
     */
 }
 
@@ -151,7 +252,15 @@ void opcontrol(){
 		/* drive */
 		axisL = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Gets amount forward/backward from left joystick
 		axisR = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y); // Gets the turn left/right from right joystick
-		chassis.tank(axisL, axisR); // tank drive
+		if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+            left_mg.move_velocity(450);
+            right_mg.move_velocity(450);
+        }else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+            left_mg.move_velocity(-450);
+            right_mg.move_velocity(-450);
+        }else{
+            chassis.tank(axisL, axisR); // arcade drive
+        }
 
         /* intake + conveyer */
         intakeConveyer();
@@ -160,12 +269,12 @@ void opcontrol(){
         extake();
 
         /* pistons (scraper & midtake) */
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && mCount > 25){
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && mCount > 25){
             midtakeExtended = !midtakeExtended;
             midtake.set_value(midtakeExtended);
             mCount = 0;
         }else if(mCount <= 25){mCount++;}
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && sCount > 25){
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && sCount > 25){
             scraperExtended = !scraperExtended;
             scraper.set_value(scraperExtended);
             sCount = 0;
