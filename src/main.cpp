@@ -97,7 +97,7 @@ void autonomous(){
     chassis.moveToPoint(0, 48, 10000); 
         // */
 
-    /* small boy left auton */
+    /* non-awp left auton */
     chassis.setPose(-48.32, 16.57, 75);
     chassis.moveToPoint(-14.86, 24.39, 1000);                       // 1
     intake.move_velocity(600);
@@ -120,7 +120,7 @@ void autonomous(){
     extakeT.move_velocity(600);
         // */
 
-    /* big boy left auton 
+    /* awp left auton 
     chassis.setPose(-48, 16, 0);
     scraper.set_value(true);
     chassis.moveToPoint(-48, 52, 1500);                            // 1.5
