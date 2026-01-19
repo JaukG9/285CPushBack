@@ -13,6 +13,7 @@ pros::ADIDigitalOut midtake('G'); // extends midtake piston
 pros::ADIDigitalOut rabbit('F'); // extends bunny ears
 pros::ADIDigitalOut odomLift('E'); // odom lift
 
+
 /* creation of drivetrain */
 lemlib::Drivetrain drivetrain(&left_mg, // left motor group
                               &right_mg, // right motor group
@@ -25,7 +26,7 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 /* odometry */
 pros::Imu imu(11); // imu
 pros::Rotation horizontal_sensor(12);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, 0);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, 0.2);
 
 // odometry settings
 lemlib::OdomSensors sensors(
@@ -36,23 +37,22 @@ lemlib::OdomSensors sensors(
     &imu // inertial sensor
 );
 
-
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(15, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(18, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              145, // derivative gain (kD)
+                                              130, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
                                               3, // large error range, in inches
                                               500, // large error range timeout, in milliseconds
-                                              75 // maximum acceleration (slew)
+                                              110 // maximum acceleration (slew)
 );
 
 // angular PID controller
 lemlib::ControllerSettings angular_controller(5, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              45, // derivative gain (kD)
+                                              54.2, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -92,27 +92,29 @@ void initialize(){
 void disabled(){}
 
 void autonomous(){
-    /* PID Tuning */
+    /* PID Tuning
     chassis.setPose(0, 0, 0);
-    chassis.turnToHeading(90, 10000); 
+    chassis.moveToPoint(0, 48, 10000); 
         // */
 
-    /* small boy left auton 
-    chassis.setPose(-48.32, 16.57, 78);
+    /* small boy left auton */
+    chassis.setPose(-48.32, 16.57, 75);
     chassis.moveToPoint(-14.86, 24.39, 1000);                       // 1
     intake.move_velocity(600);
     pros::delay(800);                                               // 1.8
-    chassis.moveToPoint(-24, 24, 1500, {.forwards = false});        // 3.3
-    chassis.turnToHeading(315, 700);                                // 4
-    chassis.moveToPoint(-10, 10, 1000, {.forwards = false});                             // 5
-    pros::delay(2000);                                              // 6
+    chassis.moveToPose(-24, 24, 315, 1500, {.forwards = false});    // 3.3
+    chassis.moveToPoint(-15, 15, 1000, {.forwards = false});        // 5
+    pros::delay(800);                                              // 6
+    intake.brake();
     extakeT.move_velocity(400);
-    pros::delay(1000);                                              // 7
-    chassis.moveToPoint(-48, 48, 1500);                             // 9
-    chassis.turnToHeading(270, 500);
+    pros::delay(600);                                              // 7
+    extakeT.brake();
+    intake.move_velocity(600);
+    chassis.moveToPoint(-50, 50, 1500);                             // 9
     scraper.set_value(true);
-    chassis.moveToPoint(-62, 48, 1500);
-    pros::delay(3000);                                              // 12
+    chassis.turnToHeading(270, 500);
+    chassis.moveToPoint(-62, 50, 1500);
+    pros::delay(1500);                                              // 12
     chassis.moveToPoint(-25, 48, 1500, {.forwards = false});        // 13.5
     pros::delay(1500);                                              // 15
     extakeT.move_velocity(600);
@@ -254,7 +256,7 @@ void opcontrol(){
     int rCount = 0;
     int odomCount = 0;
 
-	while(true){
+	while (true) {
 		pros::lcd::print(0, "%d %d %d", 0.3, axisL, axisR);
 		
 		/* drive */
@@ -298,6 +300,7 @@ void opcontrol(){
             odomLift.set_value(odomExtended);
             odomCount = 0;
         }else if(odomCount <= 25){odomCount++;}
+
 
 		pros::delay(20); // 20 ms downtime
 	}
