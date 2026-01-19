@@ -254,7 +254,7 @@ void opcontrol(){
     int rCount = 0;
     int odomCount = 0;
 
-	while (true) {
+	while(true){
 		pros::lcd::print(0, "%d %d %d", 0.3, axisL, axisR);
 		
 		/* drive */
