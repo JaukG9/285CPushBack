@@ -3,7 +3,7 @@
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-/* initialization of motors & pistons */
+/* initialization of motors & pistons -- */
 pros::Motor intake(-1, pros::MotorGearset::blue); // spins intake clockwise
 pros::Motor extakeT(20); // spins extake counterclockwise
 pros::MotorGroup left_mg({-3, -4, -5}, pros::MotorGearset::blue); // left motor group (clockwise --> omni = counterclockwise)
