@@ -26,7 +26,7 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 /* odometry */
 pros::Imu imu(11); // imu
 pros::Rotation horizontal_sensor(12);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, 0.2);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, 0);
 
 // odometry settings
 lemlib::OdomSensors sensors(
@@ -46,13 +46,13 @@ lemlib::ControllerSettings lateral_controller(18, // proportional gain (kP)
                                               100, // small error range timeout, in milliseconds
                                               3, // large error range, in inches
                                               500, // large error range timeout, in milliseconds
-                                              110 // maximum acceleration (slew)
+                                              80 // maximum acceleration (slew)
 );
 
 // angular PID controller
-lemlib::ControllerSettings angular_controller(5, // proportional gain (kP)
+lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              54.2, // derivative gain (kD)
+                                              60, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -92,14 +92,14 @@ void initialize(){
 void disabled(){}
 
 void autonomous(){
-    /* PID Tuning
+    /* PID Tuning 
     chassis.setPose(0, 0, 0);
-    chassis.moveToPoint(0, 48, 10000); 
+    chassis.turnToHeading(90, 10000);
         // */
 
-    /* non-awp left auton */
+    /* small boy left auton 
     chassis.setPose(-48.32, 16.57, 75);
-    chassis.moveToPoint(-14.86, 24.39, 1000);                       // 1
+    chassis.moveToPoint(-14.86, 24.39, 1000, {.maxSpeed = 67});                       // 1
     intake.move_velocity(600);
     pros::delay(800);                                               // 1.8
     chassis.moveToPose(-24, 24, 315, 1500, {.forwards = false});    // 3.3
@@ -113,14 +113,14 @@ void autonomous(){
     chassis.moveToPoint(-50, 50, 1500);                             // 9
     scraper.set_value(true);
     chassis.turnToHeading(270, 500);
-    chassis.moveToPoint(-62, 50, 1500);
+    chassis.moveToPoint(-62, 50, 1500, {.maxSpeed = 80});
     pros::delay(1500);                                              // 12
     chassis.moveToPoint(-25, 48, 1500, {.forwards = false});        // 13.5
     pros::delay(1500);                                              // 15
     extakeT.move_velocity(600);
         // */
 
-    /* awp left auton 
+    /* big boy left auton 
     chassis.setPose(-48, 16, 0);
     scraper.set_value(true);
     chassis.moveToPoint(-48, 52, 1500);                            // 1.5
@@ -149,30 +149,34 @@ void autonomous(){
     extakeT.move_velocity(600);
         // */
 
-    /* skills auton - left start  -------------  maximum total time to take 
+    /* skills auton - left start  -------------  maximum total time to take */
         //** left alliance side /
-    chassis.setPose(-48, -16, 180);
+    chassis.setPose(-48, -14.2, 180);
     scraper.set_value(true);
-    chassis.moveToPoint(-48, -52, 1500);                            // 1.5
+    chassis.moveToPoint(-48, -48, 2000, {.maxSpeed = 80});                            // 1.5
     chassis.turnToHeading(270, 750);                                // 2.25
-    chassis.moveToPoint(-62, -48, 1000);                            // 3.25
+    chassis.moveToPoint(-120, -46.7, 3000, {.maxSpeed = 22});                            // 3.25
     intake.move_velocity(600);
-    pros::delay(3000);                                              // 6.25
+    pros::delay(2500);                                              // 6.25
     scraper.set_value(false);
+    rabbit.set_value(true);
+    chassis.setPose(-57, -49.5, 270);
     chassis.moveToPoint(-48, -48, 1000, {.forwards = false});       // 7.25
     chassis.turnToHeading(225, 750);                                // 9
-    chassis.moveToPoint(-36.095, -59.905, 1000);                    // 10
+    chassis.moveToPoint(-36.095, -60, 1000, {.maxSpeed = 80});                    // 10
     chassis.turnToHeading(90, 750);                                 // 10.75
-    chassis.moveToPoint(50, -59.905, 1500);                         // 12.25
-    chassis.turnToHeading(225, 750);                                // 13
-    chassis.moveToPose(25, -48, 90, 1500, {.forwards = false});     // 14.5
-    pros::delay(2000);                                              // 16.5
+    chassis.moveToPoint(46, -60, 1500, {.maxSpeed = 80});                         // 12.25
+    chassis.turnToHeading(0, 1000);
+    chassis.moveToPoint(43.6, -48, 1000);
+    chassis.turnToHeading(90, 800);
+    chassis.moveToPoint(25, -48, 500, {.forwards = false, .maxSpeed = 60});
+    pros::delay(1000);                                              // 16.5
     extakeT.move_velocity(600);
     pros::delay(2000);                                              // 18.5
     extakeT.brake();
         //** left opponent side /
     scraper.set_value(true);
-    chassis.moveToPoint(62, -48, 1000);                             // 19.5
+    chassis.moveToPoint(62, -48, 5000, {.maxSpeed = 25});                             // 19.5
     pros::delay(3000);                                              // 22.5
     scraper.set_value(false);
     chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
