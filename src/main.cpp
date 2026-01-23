@@ -52,7 +52,7 @@ lemlib::ControllerSettings lateral_controller(18, // proportional gain (kP)
 // angular PID controller
 lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              60, // derivative gain (kD)
+                                              57, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -95,7 +95,9 @@ void autonomous(){
     /* PID Tuning 
     chassis.setPose(0, 0, 0);
     chassis.turnToHeading(90, 10000);
-        // */
+    pros::delay(2000);
+    pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
+        // */ 
 
     /* small boy left auton 
     chassis.setPose(-48.32, 16.57, 75);
@@ -149,25 +151,40 @@ void autonomous(){
     extakeT.move_velocity(600);
         // */
 
-    /* skills auton - left start  -------------  maximum total time to take */
+    /* skills fixed 
+    chassis.setPose(0, 0, 0);
+    scraper.set_value(true);
+    chassis.moveToPoint(0, 32, 2000, {.maxSpeed = 80});
+    chassis.turnToHeading(90, 1000);
+    chassis.moveToPoint(9999, 32, 3000, {.maxSpeed = 60});
+    chassis.waitUntilDone();
+    chassis.resetLocalPosition();
+    chassis.moveToPoint(0, -30, 1670, {.maxSpeed = 80});
+    chassis.waitUntilDone();
+    extakeT.move_velocity(600);
+    */
+
+    /* skills auton - right start  -------------  maximum total time to take */
         //** left alliance side /
     chassis.setPose(-48, -14.2, 180);
     scraper.set_value(true);
     chassis.moveToPoint(-48, -48, 2000, {.maxSpeed = 80});                            // 1.5
     chassis.turnToHeading(270, 750);                                // 2.25
-    chassis.moveToPoint(-120, -46.7, 3000, {.maxSpeed = 22});                            // 3.25
+    chassis.moveToPoint(-120, -48, 4000, {.maxSpeed = 40});                            // 3.25
     intake.move_velocity(600);
-    pros::delay(2500);                                              // 6.25
+    pros::delay(2000);                                              // 6.25
     scraper.set_value(false);
     rabbit.set_value(true);
-    chassis.setPose(-57, -49.5, 270);
+    chassis.setPose(-57, -48, 270);
     chassis.moveToPoint(-48, -48, 1000, {.forwards = false});       // 7.25
     chassis.turnToHeading(225, 750);                                // 9
-    chassis.moveToPoint(-36.095, -60, 1000, {.maxSpeed = 80});                    // 10
-    chassis.turnToHeading(90, 750);                                 // 10.75
-    chassis.moveToPoint(46, -60, 1500, {.maxSpeed = 80});                         // 12.25
+    chassis.moveToPoint(-36.095, -58.5, 1000, {.maxSpeed = 80});                    // 10
+    chassis.turnToHeading(90, 1000);                                 // 10.75
+    chassis.waitUntilDone();
+    chassis.setPose(-36, -62, 90);
+    chassis.moveToPoint(46, -62, 2600, {.maxSpeed = 80});                         // 12.25
     chassis.turnToHeading(0, 1000);
-    chassis.moveToPoint(43.6, -48, 1000);
+    chassis.moveToPoint(44, -48, 1500, {.maxSpeed = 80});
     chassis.turnToHeading(90, 800);
     chassis.moveToPoint(25, -48, 500, {.forwards = false, .maxSpeed = 60});
     pros::delay(1000);                                              // 16.5
