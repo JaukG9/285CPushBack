@@ -5,10 +5,10 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 /* initialization of motors & pistons */
 pros::Motor intake(-1, pros::MotorGearset::blue); // spins intake clockwise
-pros::Motor extakeT(20); // spins extake counterclockwise
+pros::Motor extakeT(20, pros::MotorGearset::blue); // spins extake counterclockwise
 pros::MotorGroup left_mg({-3, -4, -5}, pros::MotorGearset::blue); // left motor group (clockwise --> omni = counterclockwise)
 pros::MotorGroup right_mg({8, 9, 10}, pros::MotorGearset::blue); // right motor group (counterclockwise --> omni = clockwise)
-pros::ADIDigitalOut scraper('H'); // extends scraper piston
+pros::ADIDigitalOut scraper('H'); // extends scraper piston 
 pros::ADIDigitalOut midtake('G'); // extends midtake piston
 pros::ADIDigitalOut rabbit('F'); // extends bunny ears
 pros::ADIDigitalOut odomLift('E'); // odom lift
@@ -25,8 +25,8 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 
 /* odometry */
 pros::Imu imu(11); // imu
-pros::Rotation horizontal_sensor(12);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_275, 0);
+pros::Rotation horizontal_sensor(13);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 1.5);
 
 // odometry settings
 lemlib::OdomSensors sensors(
@@ -38,9 +38,9 @@ lemlib::OdomSensors sensors(
 );
 
 // lateral PID controller
-lemlib::ControllerSettings lateral_controller(18, // proportional gain (kP)
+lemlib::ControllerSettings lateral_controller(5, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              130, // derivative gain (kD)
+                                              10, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
@@ -52,7 +52,7 @@ lemlib::ControllerSettings lateral_controller(18, // proportional gain (kP)
 // angular PID controller
 lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              57, // derivative gain (kD)
+                                              61, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -76,7 +76,6 @@ lemlib::Chassis chassis(drivetrain, // drivetrain settings
 );
 
 
-void on_center_button(){}
 
 
 void initialize(){
@@ -94,7 +93,7 @@ void disabled(){}
 void autonomous(){
     /* PID Tuning 
     chassis.setPose(0, 0, 0);
-    chassis.turnToHeading(90, 10000);
+    chassis.moveToPoint(0, 48, 10000);
     pros::delay(2000);
     pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
         // */ 
@@ -178,22 +177,28 @@ void autonomous(){
     chassis.setPose(-57, -48, 270);
     chassis.moveToPoint(-48, -48, 1000, {.forwards = false});       // 7.25
     chassis.turnToHeading(225, 750);                                // 9
-    chassis.moveToPoint(-36.095, -58.5, 1000, {.maxSpeed = 80});                    // 10
-    chassis.turnToHeading(90, 1000);                                 // 10.75
+    chassis.moveToPoint(-36, -58.5, 1000, {.maxSpeed = 80});                    // 10
+    chassis.turnToHeading(89, 1000);                                 // 10.75
+    intake.brake();
     chassis.waitUntilDone();
     chassis.setPose(-36, -62, 90);
-    chassis.moveToPoint(46, -62, 2600, {.maxSpeed = 80});                         // 12.25
-    chassis.turnToHeading(0, 1000);
-    chassis.moveToPoint(44, -48, 1500, {.maxSpeed = 80});
+    chassis.moveToPoint(46, -62, 2600, {.maxSpeed = 90});                         // 12.25
+    chassis.turnToHeading(180, 1000);
+    chassis.waitUntilDone();
+    chassis.moveToPoint(46, -999, 1000, {.maxSpeed = 20});
+    chassis.setPose(44, -60, 180);
+    chassis.moveToPoint(44, -48, 1500, {.forwards = false, .maxSpeed = 80});
     chassis.turnToHeading(90, 800);
-    chassis.moveToPoint(25, -48, 500, {.forwards = false, .maxSpeed = 60});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(25, -48, 750, {.forwards = false, .maxSpeed = 60});
     pros::delay(1000);                                              // 16.5
+    intake.move_velocity(600);
     extakeT.move_velocity(600);
     pros::delay(2000);                                              // 18.5
     extakeT.brake();
         //** left opponent side /
     scraper.set_value(true);
-    chassis.moveToPoint(62, -48, 5000, {.maxSpeed = 25});                             // 19.5
+    chassis.moveToPoint(120, -48, 5000, {.maxSpeed = 40});                             // 19.5
     pros::delay(3000);                                              // 22.5
     scraper.set_value(false);
     chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
