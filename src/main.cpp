@@ -194,7 +194,7 @@ void autonomous(){
     pros::delay(1000);                                              // 16.5
     intake.move_velocity(600);
     extakeT.move_velocity(600);
-    pros::delay(2000);                                              // 18.5
+    chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});                                              // 18.5
     extakeT.brake();
         //** left opponent side /
     scraper.set_value(true);
@@ -204,13 +204,15 @@ void autonomous(){
     chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
     pros::delay(2000);                                              // 26
     extakeT.move_velocity(600);
-    pros::delay(2000);                                              // 28
+    chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});
     intake.brake();
     extakeT.brake();
         //** right opponent side /
     chassis.moveToPoint(41, 52, 3000);                              // 31
     scraper.set_value(true);
     chassis.turnToHeading(90, 750);                                 // 31.75
+    chassis.waitUntilDone();
+    chassis.setPose(41, 48, 90);
     chassis.moveToPoint(62, 48, 1500);                              // 33.25
     intake.move_velocity(600);
     pros::delay(3000);                                              // 36.25
