@@ -100,7 +100,7 @@ void autonomous(){
 
     /* small boy left auton 
     chassis.setPose(-48.32, 16.57, 75);
-    chassis.moveToPoint(-14.86, 24.39, 1000, {.maxSpeed = 67});                       // 1
+    chassis.moveToPoint(-14.86, 24.39, 2000, {.maxSpeed = 52});                       // 1
     intake.move_velocity(600);
     pros::delay(800);                                               // 1.8
     chassis.moveToPose(-24, 24, 315, 1500, {.forwards = false});    // 3.3
@@ -117,20 +117,63 @@ void autonomous(){
     chassis.moveToPoint(-62, 50, 1500, {.maxSpeed = 80});
     pros::delay(1500);                                              // 12
     chassis.moveToPoint(-25, 48, 1500, {.forwards = false});        // 13.5
-    pros::delay(1500);                                              // 15
+    pros::delay(1000);                                              // 15
     extakeT.move_velocity(600);
         // */
 
-    /* big boy left auton 
-    chassis.setPose(-48, 16, 0);
+    /* big boy right auton */
+    // moveToPoint(x, y, timeout)
+    // turnToHeading(heading, timeout)
+
+    // moveToPose(x, y, heading, timeout)
+    // chassis.setPose(x, y, heading)
+
+    chassis.setPose(-48, -14.2, 180);
     scraper.set_value(true);
-    chassis.moveToPoint(-48, 52, 1500);                            // 1.5
+    chassis.moveToPoint(-48, -48, 2000, {.maxSpeed = 80});                            // 1.5
     chassis.turnToHeading(270, 750);                                // 2.25
-    chassis.moveToPoint(-62, 48, 1000);                            // 3.25
+    chassis.moveToPoint(-120, -48, 4000, {.maxSpeed = 40});                            // 3.25
     intake.move_velocity(600);
     pros::delay(2000);                                              // 6.25
     scraper.set_value(false);
-    chassis.moveToPoint(-25, 48, 1000, {.forwards = false});       // 7.25
+    chassis.setPose(-57, -48, 270);
+    chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
+    pros::delay(2000);                                              // 26
+    extakeT.move_velocity(600);
+    chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});
+    intake.brake();
+    extakeT.brake();
+    chassis.setPose(-30, -48, 270);
+    chassis.turnToHeading(15, 2000);
+    chassis.moveToPoint(-24, -22, 2000, {.maxSpeed = 80});
+    intake.move_velocity(600);
+    pros::delay(4000);
+    chassis.turnToHeading(0, 2000);
+    chassis.moveToPoint(-22, 21, 2000, {.maxSpeed = 80});
+    pros::delay(4000);
+    intake.move_velocity(0);
+    chassis.turnToHeading(315, 2000);
+    chassis.moveToPoint(-11, 11, 2000, {.forwards = false, .maxSpeed = 80});
+    extakeT.move_velocity(600);
+    pros::delay(800);
+    extakeT.move_velocity(0);
+    chassis.moveToPoint(-47, 47, 2000, {.maxSpeed = 80});
+    chassis.turnToHeading(270,2000);
+    scraper.set_value(true);
+    intake.move_velocity(600);
+    pros::delay(2000);
+    chassis.moveToPoint(-60, 47, 2000, {.maxSpeed = 40}); // temporary comment (goes into matchloader)
+    pros::delay(2000);
+    scraper.set_value(false);
+    chassis.moveToPoint(-30, 47, 2000, {.forwards = false, .maxSpeed = 80});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-25, 47, 2000, {.forwards = false, .maxSpeed = 15});
+    extakeT.move_velocity(600);
+    
+
+
+    /*
+    chassis.moveToPoint(-25, -48, 1000, {.forwards = false});       // 7.25
     pros::delay(1500);
     extakeT.move_velocity(600);
     pros::delay(1500);
@@ -150,26 +193,13 @@ void autonomous(){
     extakeT.move_velocity(600);
         // */
 
-    /* skills fixed 
-    chassis.setPose(0, 0, 0);
-    scraper.set_value(true);
-    chassis.moveToPoint(0, 32, 2000, {.maxSpeed = 80});
-    chassis.turnToHeading(90, 1000);
-    chassis.moveToPoint(9999, 32, 3000, {.maxSpeed = 60});
-    chassis.waitUntilDone();
-    chassis.resetLocalPosition();
-    chassis.moveToPoint(0, -30, 1670, {.maxSpeed = 80});
-    chassis.waitUntilDone();
-    extakeT.move_velocity(600);
-    */
-
-    /* skills auton - right start  -------------  maximum total time to take */
+    /* skills auton - right start  -------------  maximum total time to take 
         //** left alliance side /
     chassis.setPose(-48, -14.2, 180);
     scraper.set_value(true);
     chassis.moveToPoint(-48, -48, 2000, {.maxSpeed = 80});                            // 1.5
     chassis.turnToHeading(270, 750);                                // 2.25
-    chassis.moveToPoint(-120, -48, 4000, {.maxSpeed = 40});                            // 3.25
+    chassis.moveToPoint(-120, -48, 3000, {.maxSpeed = 40});                            // 3.25
     intake.move_velocity(600);
     pros::delay(2000);                                              // 6.25
     scraper.set_value(false);
@@ -195,24 +225,78 @@ void autonomous(){
     intake.move_velocity(600);
     extakeT.move_velocity(600);
     chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});                                              // 18.5
+    chassis.waitUntilDone();
     extakeT.brake();
         //** left opponent side /
     scraper.set_value(true);
-    chassis.moveToPoint(120, -48, 5000, {.maxSpeed = 40});                             // 19.5
+    chassis.moveToPoint(120, -48, 3000, {.maxSpeed = 40});                             // 19.5
     pros::delay(3000);                                              // 22.5
     scraper.set_value(false);
     chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
     pros::delay(2000);                                              // 26
     extakeT.move_velocity(600);
     chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});
+    chassis.waitUntilDone();
     intake.brake();
     extakeT.brake();
         //** right opponent side /
-    chassis.moveToPoint(41, 52, 3000);                              // 31
+    chassis.moveToPoint(41, 50, 3000, {.maxSpeed = 80});                              // 31
     scraper.set_value(true);
     chassis.turnToHeading(90, 750);                                 // 31.75
     chassis.waitUntilDone();
-    chassis.setPose(41, 48, 90);
+    chassis.setPose(-48, -48, 270);
+    chassis.moveToPoint(-120, -48, 3000, {.maxSpeed = 40});                            // 3.25
+    intake.move_velocity(600);
+    pros::delay(2000);                                              // 6.25
+    scraper.set_value(false);
+    rabbit.set_value(true);
+    chassis.setPose(-57, -48, 270);
+    chassis.moveToPoint(-48, -48, 1000, {.forwards = false});       // 7.25
+    chassis.turnToHeading(225, 750);                                // 9
+    chassis.moveToPoint(-36, -58.5, 1000, {.maxSpeed = 80});                    // 10
+    chassis.turnToHeading(89, 1000);                                 // 10.75
+    intake.brake();
+    chassis.waitUntilDone();
+    chassis.setPose(-36, -62, 90);
+    chassis.moveToPoint(46, -62, 2600, {.maxSpeed = 90});                         // 12.25
+    chassis.turnToHeading(180, 1000);
+    chassis.waitUntilDone();
+    chassis.moveToPoint(46, -999, 1000, {.maxSpeed = 20});
+    chassis.setPose(44, -60, 180);
+    chassis.moveToPoint(44, -48, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.turnToHeading(90, 800);
+    chassis.waitUntilDone();
+    chassis.moveToPoint(25, -48, 750, {.forwards = false, .maxSpeed = 60});
+    pros::delay(1000);                                              // 16.5
+    intake.move_velocity(600);
+    extakeT.move_velocity(600);
+    chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});                           
+    chassis.waitUntilDone();
+    extakeT.brake();
+        //** right opponent side /
+    scraper.set_value(true);
+    chassis.moveToPoint(120, -48, 3000, {.maxSpeed = 40});                             // 19.5
+    pros::delay(3000);                                              // 22.5
+    scraper.set_value(false);
+    chassis.moveToPoint(25, -48, 1500, {.forwards = false});        // 24
+    pros::delay(2000);                                              // 26
+    extakeT.move_velocity(600);
+    chassis.moveToPoint(10, -48, 2000, {.forwards = false, .maxSpeed = 15});
+    chassis.waitUntilDone();
+    intake.brake();
+    extakeT.brake();
+        //** parking /
+    chassis.setPose(-25, 48, 270);
+    chassis.moveToPoint(-48, 48, 1500, {.maxSpeed = 80});
+    chassis.turnToHeading(210, 750);
+    chassis.moveToPoint(-60, 24, 1500, {.maxSpeed = 80});
+    chassis.turnToHeading(180, 750);
+    odomLift.set_value(true);
+    scraper.set_value(true);
+    intake.move_velocity(600);
+    chassis.moveToPoint(-60, -5, 10000);
+    /*
+    
     chassis.moveToPoint(62, 48, 1500);                              // 33.25
     intake.move_velocity(600);
     pros::delay(3000);                                              // 36.25
@@ -284,6 +368,8 @@ void opcontrol(){
     int rCount = 0;
     int odomCount = 0;
 
+    odomLift.set_value(true);
+
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", 0.3, axisL, axisR);
 		
@@ -323,11 +409,6 @@ void opcontrol(){
             rabbit.set_value(rabbitExtended);
             rCount = 0;
         }else if(rCount <= 25){rCount++;}
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y) && odomCount > 25){
-            odomExtended = !odomExtended;
-            odomLift.set_value(odomExtended);
-            odomCount = 0;
-        }else if(odomCount <= 25){odomCount++;}
 
 
 		pros::delay(20); // 20 ms downtime
