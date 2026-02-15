@@ -283,17 +283,41 @@ void autonomous(){
     chassis.waitUntilDone();
     intake.brake();
     extakeT.brake();
-        //** parking /
-    chassis.setPose(-25, 48, 270);
-    chassis.moveToPoint(-48, 48, 1500, {.maxSpeed = 80});
-    chassis.turnToHeading(210, 750);
-    chassis.moveToPose(-64, 18, 90, 1500, {.maxSpeed = 80});
-    chassis.turnToHeading(180, 750);
-    odomLift.set_value(true);
-    scraper.set_value(true);
+    chassis.waitUntilDone();
+        //** mid /
+    chassis.moveToPoint(44, -48, 1500, {.maxSpeed = 80});
+    chassis.waitUntilDone();
+    chassis.turnToHeading(0, 750);
+    chassis.moveToPoint(44,0, 1500);
+    chassis.waitUntilDone();
+    pros::delay(1000);
+    chassis.turnToHeading(90, 800);
+    chassis.moveToPoint(65,0, 1500, {.maxSpeed = 40});
     intake.move_velocity(600);
-    chassis.moveToPoint(-64, -5, 10000);
-    extakeT.move_velocity(600);
+    chassis.moveToPoint(100, 0, 1500);
+    chassis.moveToPoint(65, 0, 1500, {.forwards = false});
+    chassis.moveToPoint(100, 0, 1500);
+    chassis.moveToPoint(65, 0, 1500, {.forwards = false});
+    chassis.moveToPoint(44,0, 1500, {.forwards = false});
+    chassis.moveToPoint(24, -24, 1500, {.forwards = false, .maxSpeed = 60});
+    chassis.waitUntilDone();
+    chassis.turnToHeading(150, 800);
+    intake.brake();
+    chassis.moveToPoint(8, -8, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(0,0,1500, {.forwards = false, .maxSpeed = 5});
+    midtake.set_value(true);
+    intake.move_velocity(600);
+    extakeT.move_velocity(-600);
+    midtake.set_value(false);
+    intake.brake();
+    extakeT.brake();
+        //** parking /
+    chassis.moveToPoint(24, -24, 1500, {.forwards = false});
+    chassis.turnToHeading(40, 800);
+    chassis.moveToPoint(44,0, 1500);
+    chassis.turnToHeading(90, 800);
+    chassis.moveToPoint(64, 0, 1500);
     /*
     
     chassis.moveToPoint(62, 48, 1500);                              // 33.25
