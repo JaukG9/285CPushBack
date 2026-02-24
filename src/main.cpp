@@ -26,7 +26,8 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 /* odometry */
 pros::Imu imu(11); // imu
 pros::Rotation horizontal_sensor(13);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 2);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 1.5);
+//lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 2); // possible better config
 
 // odometry settings
 lemlib::OdomSensors sensors(
@@ -52,7 +53,7 @@ lemlib::ControllerSettings lateral_controller(5, // proportional gain (kP)
 // angular PID controller
 lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              65, // derivative gain (kD)
+                                              61, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
