@@ -26,7 +26,7 @@ lemlib::Drivetrain drivetrain(&left_mg, // left motor group
 /* odometry */
 pros::Imu imu(11); // imu
 pros::Rotation horizontal_sensor(13);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 1.5);
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 2);
 
 // odometry settings
 lemlib::OdomSensors sensors(
@@ -40,7 +40,7 @@ lemlib::OdomSensors sensors(
 //lateral PID controller
 lemlib::ControllerSettings lateral_controller(5, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              10, // derivative gain (kD)
+                                              12, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in inches
                                               100, // small error range timeout, in milliseconds
@@ -52,7 +52,7 @@ lemlib::ControllerSettings lateral_controller(5, // proportional gain (kP)
 // angular PID controller
 lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              60, // derivative gain (kD)
+                                              65, // derivative gain (kD)
                                               3, // anti windup
                                               1, // small error range, in degrees
                                               100, // small error range timeout, in milliseconds
@@ -76,8 +76,6 @@ lemlib::Chassis chassis(drivetrain, // drivetrain settings
 );
 
 
-
-
 void initialize(){
 	pros::lcd::initialize();
 	chassis.calibrate();
@@ -94,6 +92,12 @@ void autonomous(){
     /* PID Tuning */
     chassis.setPose(0, 0, 0);
     chassis.turnToHeading(90, 10000);
+    pros::delay(2000);
+    chassis.turnToHeading(180, 10000);
+    pros::delay(2000);
+    chassis.turnToHeading(270, 10000);
+    pros::delay(2000);
+    chassis.turnToHeading(0, 10000);
     pros::delay(2000);
     pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
         // */ 
