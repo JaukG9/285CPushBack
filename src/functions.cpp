@@ -5,35 +5,130 @@
 #include "odometry.h"
 #include "functions.h"
 
+/**
+ * @brief runs the motors attached to the conveyer.
+ *
+ * This function runs the motors attached to the conveyer with a specified rpm,
+ * running the robot's intake, conveyer, and (if PTO is activated) outtake.
+ *
+ * @param rpm the rotations per minute at which the motors should rotate.
+ */
 void conveyerControl(int rpm){
     conveyer1.move_velocity(rpm);
     conveyer2.move_velocity(rpm);
 }
 
-void scraperChange(bool scraperVal){
-    scraper.set_value(!scraperVal);
+/**
+ * @brief switches the state of the scraper piston.
+ *
+ * This function first changes the global boolean variable scraperActivated to 
+ * its opposite state (true or false), and then sets the piston attached to the
+ * scraper (on TriPort H) to the new value of scraperActivated (true = extended, 
+ * false = unextended).
+ *
+ * This will extend or unextend the scraper.
+ */
+void scraperChange(){
+    scraperActivated = !scraperActivated;
+    scraper.set_value(scraperActivated);
 }
 
-void trapdoorChange(bool midtakeVal){
-    trapdoor.set_value(!midtakeVal);
+/**
+ * @brief switches the state of the trapdoor piston.
+ *
+ * This function first changes the global boolean variable trapdoorActivated to
+ * its opposite state (true or false), and then sets the piston attached to the
+ * trapdoor (on TriPort G) to the new value of trapdoorActivated (true = extended,
+ * false = unextended).
+ *
+ * This will open or close the trapdoor.
+ */
+void trapdoorChange(){
+    trapdoorActivated = !trapdoorActivated;
+    trapdoor.set_value(trapdoorActivated);
 }
 
-void wingChange(bool wingVal){
-    wing.set_value(!wingVal);
+/**
+ * @brief switches the state of the wing piston.
+ *
+ * This function first changes the global boolean variable wingActivated to its
+ * opposite state (true or false), and then sets the piston attached to the wing
+ * (on TriPort F) to the new value of wingActivated (true = extended, false = unextended).
+ *
+ * This will extend or unextend the wing.
+ */
+void wingChange(){
+    wingActivated = !wingActivated;
+    wing.set_value(wingActivated);
 }
 
-void ptoChange(bool ptoVal){
-    pto.set_value(!ptoVal);
+/**
+ * @brief switches the state of the PTO piston.
+ *
+ * This function first changes the global boolean variable ptoActivated to its
+ * opposite state (true or false), and then sets the piston used for the PTO
+ * (on TriPort E) to the new value of ptoActivated (true = extended, false = unextended).
+ *
+ * This will activate or deactivate the PTO mechanism.
+ */
+void ptoChange(){
+    ptoActivated = !ptoActivated;
+    pto.set_value(ptoActivated);
 }
 
-void doubleParkChange(bool doubleParkVal){
-    doublePark.set_value(!doubleParkVal);
+/**
+ * @brief switches the state of the intake funnel piston.
+ *
+ * This function first changes the global boolean variable intakeFunnelActivated
+ * to its opposite state (true or false), and then sets the piston attached to the
+ * intake funnel (on TriPort D) to the new value of intakeFunnelActivated (true = extended,
+ * false = unextended).
+ *
+ * This will activate or deactivate the intake funneling mechanism.
+ */
+void intakeFunnelChange(){
+    intakeFunnelActivated = !intakeFunnelActivated;
+    pto.set_value(intakeFunnelActivated);
 }
 
-void odomLiftChange(bool odomLiftVal){
-    odomLift.set_value(!odomLiftVal);
+/**
+ * @brief switches the state of the double park piston.
+ *
+ * This function first changes the global boolean variable doubleParkActivated to its
+ * opposite state (true or false), and then sets the piston attached to the double park
+ * mechanism (on TriPort C) to the new value of doubleParkActivated (true = extended,
+ * false = unextended).
+ *
+ * This will activate or deactivate the double park mechanism.
+ */
+void doubleParkChange(){
+    doubleParkActivated = !doubleParkActivated;
+    doublePark.set_value(doubleParkActivated);
 }
 
+/**
+ * @brief switches the state of the odom lift piston.
+ *
+ * This function first changes the global boolean variable odomLiftActivated to its
+ * opposite state (true or false), and then sets the piston attached to the odom lift
+ * (on TriPort B) to the new value of odomLiftActivated (true = extended, false = unextended).
+ *
+ * This will lift or drop the odometry pod.
+ */
+void odomLiftChange(){
+    odomLiftActivated = !odomLiftActivated;
+    odomLift.set_value(odomLiftActivated);
+}
+
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void tank(){
     int axisL = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Gets amount forward/backward from left joystick
     int axisR = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y); // Gets the turn left/right from right joystick

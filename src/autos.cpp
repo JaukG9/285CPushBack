@@ -4,27 +4,75 @@
 #include "functions.h"
 #include "autos.h"
 
+/**
+ * @brief runs the skip autonomous.
+ *
+ * Moves the robot forward 6 inches while our alliance is running a solo AWP
+ * autonomous, such that the robot is not touching the parking zone by the end
+ * of the autonomous phase.
+ */
 void skip(){
     chassis.setPose(0, 0, 0);
-    chassis.moveToPoint(0, 6, 1000);
+    chassis.moveToPoint(0, 6, 1000);    // move off of parking zone
 }
 
+/**
+ * @brief runs the left side 4 block rush autonomous.
+ *
+ * Intakes the group of 3 blocks that start on left side of the field and outtakes
+ * them, with the preload, into the long goal for a total of 4 blocks in the left
+ * long goal. Then, wings the blocks into control.
+ */
 void left_4Rush(){
 
 }
 
+/**
+ * @brief runs the right side 4 block rush autonomous.
+ *
+ * Intakes the group of 3 blocks that start on right side of the field and outtakes
+ * them, with the preload, into the long goal for a total of 4 blocks in the right
+ * long goal. Then, wings the blocks into control.
+ */
 void right_4Rush(){
 
 }
 
+/**
+ * @brief runs the left side 7 block rush autonomous.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void left_7Rush(){
 
 }
 
+/**
+ * @brief runs the right side 7 block rush autonomous.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void right_7Rush(){
 
 }
 
+/**
+ * @brief runs the left side 4-3 split autonomous.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void left_43Split(){
     chassis.setPose(-47, 17.81, 75);
     chassis.moveToPoint(-14.86, 24.39, 2000, {.maxSpeed = 52});                       // 1
@@ -59,14 +107,41 @@ void left_43Split(){
     wing.set_value(false);
 }
 
+/**
+ * @brief runs the right side 4-3 split autonomous.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void right_43Split(){
 
 }
 
+/**
+ * @brief runs the solo AWP (left side).
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void awp(){
     
 }
 
+/**
+ * @brief runs the programming skills autonomous.
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 void skills(){
     /* skills auton - right start  -------------  maximum total time to take 
         //** left alliance side /

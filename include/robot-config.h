@@ -10,5 +10,14 @@ extern pros::ADIDigitalOut scraper;
 extern pros::ADIDigitalOut trapdoor;
 extern pros::ADIDigitalOut wing;
 extern pros::ADIDigitalOut pto;
+extern pros::ADIDigitalOut intakeFunnel;
 extern pros::ADIDigitalOut doublePark;
 extern pros::ADIDigitalOut odomLift;
+
+bool scraperActivated;
+bool trapdoorActivated;
+bool wingActivated;
+bool ptoActivated;
+bool intakeFunnelActivated;
+bool doubleParkActivated;
+bool odomLiftActivated;

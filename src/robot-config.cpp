@@ -11,5 +11,14 @@ pros::ADIDigitalOut scraper('H'); // extends scraper piston
 pros::ADIDigitalOut trapdoor('G'); // extends midtake piston
 pros::ADIDigitalOut wing('F'); // extends wing
 pros::ADIDigitalOut pto('E'); // extends pto
-pros::ADIDigitalOut doublePark('D'); // extends double park
-pros::ADIDigitalOut odomLift('C'); // odom lift
+pros::ADIDigitalOut intakeFunnel('D'); //extends intakeFunnel
+pros::ADIDigitalOut doublePark('C'); // extends double park
+pros::ADIDigitalOut odomLift('B'); // odom lift
+
+bool scraperActivated = false;
+bool trapdoorActivated = false;
+bool wingActivated = false;
+bool ptoActivated = false;
+bool intakeFunnelActivated = false;
+bool doubleParkActivated = false;
+bool odomLiftActivated = false;
