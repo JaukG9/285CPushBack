@@ -13,4 +13,4 @@ lemlib::Drivetrain drivetrain(&left_mg,                     // left motor group
                               lemlib::Omniwheel::NEW_325,   // using new 3.25" omnis
                               450,                          // drivetrain rpm (450 = 600rpm * (36/48 gear ratio))
                               8                             // horizontal drift (8 because of center traction wheels)
-)
+);

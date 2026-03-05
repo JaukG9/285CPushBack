@@ -5,10 +5,10 @@
 #include "robot-config.h"
 
 void conveyerControl(int rpm);
-void scraperChange(bool scraperVal);
-void trapdoorChange(bool midtakeVal);
-void wingChange(bool wingVal);
-void ptoChange(bool ptoVal);
-void doubleParkChange(bool doubleParkVal);
-void odomLiftChange(bool odomLiftVal);
+void scraperChange();
+void trapdoorChange();
+void wingChange();
+void ptoChange();
+void doubleParkChange();
+void odomLiftChange();
 void tank();
