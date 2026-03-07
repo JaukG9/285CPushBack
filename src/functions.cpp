@@ -6,16 +6,16 @@
 #include "robot/functions.h"
 
 /**
- * @brief runs the motors attached to the conveyer.
+ * @brief runs the motors attached to the conveyor.
  *
- * This function runs the motors attached to the conveyer with a specified rpm,
- * running the robot's intake, conveyer, and (if PTO is activated) outtake.
+ * This function runs the motors attached to the conveyor with a specified rpm,
+ * running the robot's intake, conveyor, and (if PTO is activated) outtake.
  *
  * @param rpm the rotations per minute at which the motors should rotate.
  */
-void conveyerControl(int rpm){
-    conveyer1.move_velocity(rpm);
-    conveyer2.move_velocity(rpm);
+void conveyorControl(int rpm){
+    conveyor1.move_velocity(rpm);
+    conveyor2.move_velocity(rpm);
 }
 
 /**

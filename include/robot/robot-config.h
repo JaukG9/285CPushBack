@@ -4,8 +4,8 @@
 #include "lemlib/api.hpp"
 
 extern pros::Controller controller;
-extern pros::Motor conveyer1;
-extern pros::Motor conveyer2;
+extern pros::Motor conveyor1;
+extern pros::Motor conveyor2;
 extern pros::adi::DigitalOut scraper;
 extern pros::adi::DigitalOut trapdoor;
 extern pros::adi::DigitalOut wing;
