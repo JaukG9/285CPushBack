@@ -1,10 +1,10 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "robot-config.h"
-#include "drivetrain.h"
-#include "functions.h"
-#include "odometry.h"
-#include "autos.h"
+#include "robot/robot-config.h"
+#include "robot/drivetrain.h"
+#include "robot/functions.h"
+#include "robot/odometry.h"
+#include "robot/autos.h"
 
 void initialize(){
 	pros::lcd::initialize();

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "drivetrain.h"
-#include "odometry.h"
+#include "robot/drivetrain.h"
+#include "robot/odometry.h"
 
 /* odometry */
 pros::Imu imu(11); // imu

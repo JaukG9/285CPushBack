@@ -1,6 +1,6 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "robot-config.h"
+#include "robot/robot-config.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 

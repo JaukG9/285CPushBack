@@ -2,7 +2,7 @@
 
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "drivetrain.h"
-#include "odometry.h"
+#include "robot/drivetrain.h"
+#include "robot/odometry.h"
 
 extern lemlib::Chassis chassis;

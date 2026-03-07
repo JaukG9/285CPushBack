@@ -1,8 +1,8 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "odometry.h"
-#include "functions.h"
-#include "autos.h"
+#include "robot/odometry.h"
+#include "robot/functions.h"
+#include "robot/autos.h"
 
 /**
  * @brief runs the skip autonomous.

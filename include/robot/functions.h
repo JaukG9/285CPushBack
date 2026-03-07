@@ -2,7 +2,7 @@
 
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "robot-config.h"
+#include "robot/robot-config.h"
 
 void conveyerControl(int rpm);
 void scraperChange();

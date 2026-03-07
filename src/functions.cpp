@@ -1,9 +1,9 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "drivetrain.h"
-#include "robot-config.h"
-#include "odometry.h"
-#include "functions.h"
+#include "robot/drivetrain.h"
+#include "robot/robot-config.h"
+#include "robot/odometry.h"
+#include "robot/functions.h"
 
 /**
  * @brief runs the motors attached to the conveyer.
@@ -121,12 +121,16 @@ void odomLiftChange(){
 }
 
 /**
+ * @brief Translates controller movements to drivetrain movements
  *
- *
- *
- *
- *
- *
+ * This function detects up and down movements on the joysticks of the controller
+ * and based on how much each joystick is moved up or down, the drivetrain moves accordingly.
+ * Down reverses the drivetrain, and up moves the drivetrain forward.
+ * The left side of the drive train is controlled by the left joystick, 
+ * and the right side of the drive train is controlled by the right joystick.
+ * Turning the joysticks in opposite directions turns the bot.
+ * If the buttons on the controller are used to move instead, the function
+ * moves the drivetrain by a set amount.
  *
  */
 void tank(){

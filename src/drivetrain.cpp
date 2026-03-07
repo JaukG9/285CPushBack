@@ -1,6 +1,6 @@
 #include "main.h"
 #include "lemlib/api.hpp"
-#include "drivetrain.h"
+#include "robot/drivetrain.h"
 
 /* creation of drivetrain motor groups */
 pros::MotorGroup left_mg({-3, -4, -5}, pros::MotorGearset::blue);   // left motor group (motors spin clockwise --> wheels spin counterclockwise)
