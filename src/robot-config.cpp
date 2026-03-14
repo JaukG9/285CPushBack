@@ -6,8 +6,8 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 /* initialization of motors & pistons */
-pros::Motor conveyor1(-1, pros::MotorGearset::blue);
-pros::Motor conveyor2(10, pros::MotorGearset::blue);
+pros::Motor conveyor1(20, pros::MotorGearset::blue);
+pros::Motor conveyor2(-10, pros::MotorGearset::blue);
 pros::adi::DigitalOut scraper('H'); // extends scraper piston
 pros::adi::DigitalOut trapdoor('G'); // extends midtake piston
 pros::adi::DigitalOut wing('F'); // extends wing

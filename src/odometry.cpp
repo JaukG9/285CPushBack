@@ -4,15 +4,15 @@
 #include "robot/odometry.h"
 
 /* odometry */
-pros::Imu imu(11); // imu
-pros::Rotation horizontal_sensor(13);
-lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_sensor, lemlib::Omniwheel::NEW_2, 1.5);
+pros::Imu imu(13); // imu
+pros::Rotation vertical_sensor(12);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_2, 1.5);
 
 // odometry settings
 lemlib::OdomSensors sensors(
-    nullptr,  // vertical tracking wheel 1
+    &vertical_tracking_wheel,  // vertical tracking wheel 1
     nullptr,  // vertical tracking wheel 2
-    &horizontal_tracking_wheel,  // horizontal tracking wheel 1
+    nullptr,  // horizontal tracking wheel 1
     nullptr,  // horizontal tracking wheel 2
     &imu // inertial sensor
 );
