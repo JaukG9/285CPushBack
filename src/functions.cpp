@@ -147,3 +147,20 @@ void tank(){
 
     chassis.tank(axisL, axisR); // tank drive
 }
+
+struct ChainToPointParams {
+    /** whether the robot should move forwards or backwards. True by default */
+    bool forwards = true;
+    /** the maximum speed the robot can travel at. Value between 0-127. 127 by default */
+    float maxSpeed = 127;
+};
+void chainToPoint(float x, float y, int timeout, ChainToPointParams params = {}, bool async = true){
+    float currentX = chassis.getPose().x;
+    float currentY = chassis.getPose().y;
+    double distance = std::sqrt(std::pow(x - currentX, 2) + std::pow(y - currentY, 2));
+    float actualMax = std::min((double) params.maxSpeed, sqrt(150 * distance));
+    float minSpeed = actualMax / 2;
+    float earlyExitRange = distance * 15 / 100 * actualMax / 127;
+
+    chassis.moveToPoint(x, y, timeout, {.forwards = params.forwards, .maxSpeed = params.maxSpeed, .minSpeed = minSpeed, .earlyExitRange = earlyExitRange}, async);
+}

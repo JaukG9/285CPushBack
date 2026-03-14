@@ -2,6 +2,7 @@
 #include "lemlib/api.hpp"
 #include "robot/robot-config.h"
 
+/* initialization of the controller */
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 /* initialization of motors & pistons */
@@ -15,6 +16,7 @@ pros::adi::DigitalOut intakeFunnel('D'); //extends intakeFunnel
 pros::adi::DigitalOut doublePark('C'); // extends double park
 pros::adi::DigitalOut odomLift('B'); // odom lift
 
+/* global variables */
 bool scraperActivated = false;
 bool trapdoorActivated = false;
 bool wingActivated = false;
