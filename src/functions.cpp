@@ -162,5 +162,10 @@ void chainToPoint(float x, float y, int timeout, ChainToPointParams params = {},
     float minSpeed = actualMax / 2;
     float earlyExitRange = distance * 15 / 100 * actualMax / 127;
 
-    chassis.moveToPoint(x, y, timeout, {.forwards = params.forwards, .maxSpeed = params.maxSpeed, .minSpeed = minSpeed, .earlyExitRange = earlyExitRange}, async);
+    chassis.moveToPoint(x, y, timeout, 
+                        {.forwards = params.forwards, 
+                         .maxSpeed = params.maxSpeed,
+                         .minSpeed = minSpeed, 
+                         .earlyExitRange = earlyExitRange}, 
+                        async);
 }
