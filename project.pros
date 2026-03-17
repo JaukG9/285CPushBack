@@ -1,7 +1,11 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
+<<<<<<< HEAD
     "project_name": "AWP",
+=======
+    "project_name": "Skills",
+>>>>>>> 491d54d3189faba105b8c6c192d1b2a4afe37acf
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -635,7 +639,11 @@
       }
     },
     "upload_options": {
+<<<<<<< HEAD
       "slot": 2
+=======
+      "slot": 3
+>>>>>>> 491d54d3189faba105b8c6c192d1b2a4afe37acf
     },
     "use_early_access": false
   }
