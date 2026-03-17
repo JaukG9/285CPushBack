@@ -14,8 +14,7 @@
  * @param rpm the rotations per minute at which the motors should rotate.
  */
 void conveyorControl(int rpm){
-    conveyor1.move_velocity(rpm);
-    conveyor2.move_velocity(rpm);
+    conveyor.move_velocity(rpm);
 }
 
 /**
