@@ -74,8 +74,9 @@ void right_7Rush(){
  *
  */
 void left_43Split(){
-    chassis.moveToPoint(3, 3, 3, {.maxSpeed = 40});
-    chainToPoint(3, 3, 3, {.maxSpeed = 40});
+    chassis.setPose(-47, 17.81, 75);
+    conveyorControl(600);
+    chainToPoint(-14.86, 24.39, 2000, {.maxSpeed = 60});
     
 
     /*
