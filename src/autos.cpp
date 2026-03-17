@@ -74,9 +74,14 @@ void right_7Rush(){
  *
  */
 void left_43Split(){
+    chassis.moveToPoint(3, 3, 3, {.maxSpeed = 40});
+    chainToPoint(3, 3, 3, {.maxSpeed = 40});
+    
+
+    /*
     chassis.setPose(-47, 17.81, 75);
     chassis.moveToPoint(-14.86, 24.39, 2000, {.maxSpeed = 52});                       // 1
-    conveyerControl(600);
+    conveyorControl(600);
     pros::delay(800);                                               // 1.8
     scraper.set_value(true);
     chassis.moveToPose(-24, 24, 315, 1500, {.forwards = false});    // 3.3
@@ -85,12 +90,12 @@ void left_43Split(){
     trapdoor.set_value(true);
     pto.set_value(true);
     pros::delay(1200);                                              // 7
-    conveyerControl(0);
+    conveyorControl(0);
     pto.set_value(false);
     trapdoor.set_value(false);
     chassis.moveToPoint(-44, 49, 1500, {.maxSpeed = 80});                             // 9
     chassis.turnToHeading(270, 500);
-    conveyerControl(600);
+    conveyorControl(600);
     chassis.moveToPoint(-62, 48.25, 1200, {.maxSpeed = 40});
     chassis.waitUntilDone();                                     // 12
     chassis.moveToPoint(-15, 48.5, 1500, {.forwards = false});        // 13.5
@@ -105,6 +110,7 @@ void left_43Split(){
     chassis.turnToHeading(270, 750);
     chassis.moveToPoint(-4, 61.5, 10000, {.forwards = false});
     wing.set_value(false);
+    */
 }
 
 /**

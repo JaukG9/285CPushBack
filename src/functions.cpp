@@ -18,6 +18,16 @@ void conveyorControl(int rpm){
 }
 
 /**
+ * @brief stops the motors attached to the conveyor.
+ *
+ * This function stops the motors attached to the conveyor, stopping 
+ * the robot's intake, conveyor, and (if PTO is activated) outtake.
+ */
+void conveyorBrake(){
+    conveyor.brake();
+}
+
+/**
  * @brief switches the state of the scraper piston.
  *
  * This function first changes the global boolean variable scraperActivated to 
