@@ -48,7 +48,32 @@ void right_4Rush(){
  *
  */
 void left_7Rush(){
-
+   /* left 7 Rush block ---------------------------------- ~16 seconds*/
+    chassis.setPose(-140, 20, 65);
+    conveyorControl(600);
+    chainToHeading(320);
+    chainToPoint(-58, 55, 1500); // 1.5 
+    conveyorControl(0);
+    chainToHeading(270);
+    chainToPoint(-120,120, 1500); // 1.5
+    conveyorControl(600);
+    chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
+    pros::delay(500); // .5
+    conveyorControl(0);
+    chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
+    chassis.waitUntilDone();
+    chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
+    pto.set_value(true);
+    pros::delay(2000); // 2
+    pto.set_value(false);
+    chainToPoint(-90, 120, 1500); // 1.5
+    chainToHeading(0);
+    chainToPoint(-90, 150, 1500); // 1.5
+    chainToHeading(270);
+    wing.set_value(true);
+    chainToPoint(-30, 150, 1500, {.forwards = false}); // 1.5
+    pros::delay(1500); // 1.5
+    wing.set_value(false);
 }
 
 /**
