@@ -51,27 +51,27 @@ void left_7Rush(){
    /* left 7 Rush block ---------------------------------- ~16 seconds*/
     chassis.setPose(-140, 20, 65);
     conveyorControl(600);
-    chainToHeading(320);
-    chainToPoint(-58, 55, 1500); // 1.5 
+    chassis.chainToHeading(320, 750);
+    chassis.chainToPoint(-58, 55, 1500); // 1.5 
     conveyorControl(0);
-    chainToHeading(270);
-    chainToPoint(-120,120, 1500); // 1.5
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-120,120, 1500); // 1.5
     conveyorControl(600);
-    chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
+    chassis.chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
     pros::delay(500); // .5
     conveyorControl(0);
-    chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
+    chassis.chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
     chassis.waitUntilDone();
-    chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
+    chassis.chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
     pto.set_value(true);
     pros::delay(2000); // 2
     pto.set_value(false);
-    chainToPoint(-90, 120, 1500); // 1.5
-    chainToHeading(0);
-    chainToPoint(-90, 150, 1500); // 1.5
-    chainToHeading(270);
+    chassis.chainToPoint(-90, 120, 1500); // 1.5
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-90, 150, 1500); // 1.5
+    chassis.chainToHeading(270, 750);
     wing.set_value(true);
-    chainToPoint(-30, 150, 1500, {.forwards = false}); // 1.5
+    chassis.chainToPoint(-30, 150, 1500, {.forwards = false}); // 1.5
     pros::delay(1500); // 1.5
     wing.set_value(false);
 }
@@ -101,7 +101,7 @@ void right_7Rush(){
 void left_43Split(){
     chassis.setPose(-47, 17.81, 75);
     conveyorControl(600);
-    chainToPoint(-14.86, 24.39, 2000, {.maxSpeed = 60});
+    chassis.chainToPoint(-14.86, 24.39, 2000, {.maxSpeed = 60});
     
 
     /*
@@ -149,7 +149,23 @@ void left_43Split(){
  *
  */
 void right_43Split(){
-
+    chassis.setPose(-51.5, -10, 120);
+    chassis.moveToPoint(-22, -23, 2000, {.maxSpeed = 70});
+    conveyorControl(600);
+    chassis.turnToHeading(230, 2000);
+    chassis.moveToPoint(-5, -5, 2000, {.forwards = false});
+    ptoChange();
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-45, -47, 2000, {.forwards = false});
+    chassis.moveToPoint(-62, -47, 2000);
+    conveyorControl(600);
+    chassis.moveToPoint(-29, -47, 2000, {.forwards = false});
+    ptoChange();
+    chassis.moveToPoint(-33, -59, 2000);
+    chassis.turnToHeading(90, 2000);
+    wing.set_value(true);
+    chassis.moveToPoint(-8, -47, 2000, {.forwards = false});
+    wing.set_value(false);
 }
 
 /**
