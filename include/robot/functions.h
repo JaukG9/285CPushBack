@@ -5,6 +5,7 @@
 #include "robot/robot-config.h"
 
 void conveyorControl(int rpm);
+void conveyorBrake();
 void scraperChange();
 void trapdoorChange();
 void wingChange();

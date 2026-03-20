@@ -147,11 +147,11 @@ void tank(){
     
     // Checks if either of the vertical directional buttons are being pressed
     if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
-        axisL = 127;
-        axisR = 127;
+        axisL = 127 * .85;
+        axisR = 127 * .85;
     }else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-        axisL = -127;
-        axisR = -127;
+        axisL = -127 * .85;
+        axisR = -127 * .85;
     }
 
     chassis.tank(axisL, axisR); // tank drive

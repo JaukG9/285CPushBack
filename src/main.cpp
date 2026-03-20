@@ -41,6 +41,17 @@ void opcontrol(){
 	while(true){
         tank();
 
+        // R1 = wing
+        // R2 = full conveyor
+        // L1 = reverse conveyor
+        // L2 = half conveyor
+        // A = trapdoor
+        // X = matchloader
+
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+            conveyorControl(600);
+        }else{conveyorBrake();}
+
         /* pistons (scraper & midtake) 
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && mCount > 25){
             midtakeExtended = !midtakeExtended;
