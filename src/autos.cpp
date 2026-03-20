@@ -24,7 +24,15 @@ void skip(){
  * long goal. Then, wings the blocks into control.
  */
 void left_4Rush(){
-
+    chassis.setPose(-50.715, 4.034, 0); /*first position keep exact*/
+    conveyorControl(600);
+    chassis.chainToHeading(60, 750);
+    chassis.chainToPoint(-22.5, 22, 1500);
+    conveyorBrake();
+    chassis.chainToHeading(327, 750);
+    chassis.chainToPoint(-41, 48, 1500);
+    conveyorBrake();
+    chassis.chainToHeading(90, 750);
 }
 
 /**
@@ -35,8 +43,7 @@ void left_4Rush(){
  * long goal. Then, wings the blocks into control.
  */
 void right_4Rush(){
-    chassis.setPose(-50.715, 4.034, 0);
-    conveyorControl(600);
+    
     
     
     
@@ -57,13 +64,13 @@ void left_7Rush(){
     conveyorControl(600);
     chassis.chainToHeading(320, 750);
     chassis.chainToPoint(-58, 55, 1500); // 1.5 
-    conveyorControl(0);
+    conveyorBrake();
     chassis.chainToHeading(270, 750);
     chassis.chainToPoint(-120,120, 1500); // 1.5
     conveyorControl(600);
     chassis.chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
     pros::delay(250); // .25
-    conveyorControl(0);
+    conveyorBrake();
     chassis.chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
     chassis.waitUntilDone();
     chassis.chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
