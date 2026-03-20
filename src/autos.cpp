@@ -35,7 +35,11 @@ void left_4Rush(){
  * long goal. Then, wings the blocks into control.
  */
 void right_4Rush(){
-
+    chassis.setPose(-50.715, 4.034, 0);
+    conveyorControl(600);
+    
+    
+    
 }
 
 /**
@@ -48,7 +52,7 @@ void right_4Rush(){
  *
  */
 void left_7Rush(){
-   /* left 7 Rush block ---------------------------------- ~16 seconds*/
+   /* left 7 Rush block ---------------------------------- ~16 seconds (Need to fix directions)*/
     chassis.setPose(-140, 20, 65);
     conveyorControl(600);
     chassis.chainToHeading(320, 750);
@@ -58,13 +62,13 @@ void left_7Rush(){
     chassis.chainToPoint(-120,120, 1500); // 1.5
     conveyorControl(600);
     chassis.chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
-    pros::delay(500); // .5
+    pros::delay(250); // .25
     conveyorControl(0);
     chassis.chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
     chassis.waitUntilDone();
     chassis.chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
     pto.set_value(true);
-    pros::delay(2000); // 2
+    pros::delay(1500); // 2
     pto.set_value(false);
     chassis.chainToPoint(-90, 120, 1500); // 1.5
     chassis.chainToHeading(0, 750);
@@ -86,7 +90,33 @@ void left_7Rush(){
  *
  */
 void right_7Rush(){
-
+    /* Right 7 Rush block ---------------------------------- ~*/
+    chassis.setPose(-54,-7,122);
+    conveyorControl(600);
+    chassis.chainToPoint(-24, 24, 1500);
+    pros::delay(250);
+    conveyorControl(0);
+    chassis.chainToHeading(224, 750);
+    chassis.chainToPoint(-48, -47, 1500);
+    chassis.waitUntilDone();
+    chassis.chainToHeading(270, 750);
+    /* for myself Paused at (-48, -47, 1500) before the matchloader + long score*/
+    scraper.set_value(true);
+    chassis.chainToPoint(-93, -47, 1500, {.maxSpeed = 50});
+    chassis.chainToPoint(-30, -47, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.chainToPoint(0, -47, 1500, {.forwards = false, .maxSpeed = 10});
+    pto.set_value(true);
+    pros::delay(1500);
+    pto.set_value(false);
+    chassis.chainToPoint(-30, -47, 1500);
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-30, -35, 750);
+    chassis.chainToHeading(90, 750);
+    wing.set_value(true);
+    chassis.chainToPoint(-5, -35, 750);
+    pros::delay(1500);
+    wing.set_value(false);
 }
 
 /**

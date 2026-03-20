@@ -25,15 +25,11 @@ void autonomous(){
 }
 
 void opcontrol(){
-	int axisL = 0;
-	int axisR = 0;
-    bool scraperExtended = false;
-    bool midtakeExtended = false;
-    bool rabbitExtended = false;
-    bool odomExtended = false;
+    bool runningConveyor = false;
     int sCount = 0;
-    int mCount = 0;
-    int rCount = 0;
+    int tCount = 0;
+    int wCount = 0;
+    int ptoCount = 0;
     int odomCount = 0;
 
     odomLift.set_value(true);
@@ -48,26 +44,48 @@ void opcontrol(){
         // A = trapdoor
         // X = matchloader
 
+        runningConveyor = false;
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+            if(!ptoActivated){
+                pto.set_value(true);
+                ptoActivated = true;
+            }
             conveyorControl(600);
-        }else{conveyorBrake();}
+            runningConveyor = true;
+        }else{
+            if(ptoActivated){
+                pto.set_value(false);
+                ptoActivated = false;
+            }
+        }
 
-        /* pistons (scraper & midtake) 
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && mCount > 25){
-            midtakeExtended = !midtakeExtended;
-            trapdoor.set_value(midtakeExtended);
-            mCount = 0;
-        }else if(mCount <= 25){mCount++;}
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && sCount > 25){
-            scraperExtended = !scraperExtended;
-            scraper.set_value(scraperExtended);
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+            conveyorControl(600);
+            runningConveyor = true;
+        }
+
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+            conveyorControl(-600);
+            runningConveyor = true;
+        }
+
+        if(!runningConveyor){
+            conveyorBrake();
+        }
+
+        /* pistons (scraper & midtake) */
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && tCount > 25){
+            trapdoorChange();
+            tCount = 0;
+        }else if(tCount <= 25){tCount++;}
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) && sCount > 25){
+            scraperChange();
             sCount = 0;
         }else if(sCount <= 25){sCount++;}
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) && rCount > 25){
-            rabbitExtended = !rabbitExtended;
-            wing.set_value(rabbitExtended);
-            rCount = 0;
-        }else if(rCount <= 25){rCount++;} */
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && wCount > 25){
+            wingChange();
+            wCount = 0;
+        }else if(wCount <= 25){wCount++;}
 
 		pros::delay(20); // 20 ms downtime
 	}
