@@ -114,7 +114,8 @@ void left_7Rush(){
     chassis.chainToPoint(-10, 58, 1500, {.forwards = false});
     wing.set_value(false);
     while(true){
-        
+        chassis.moveToPoint(-4, 58, 200, {.forwards = false});
+        chassis.waitUntilDone();
     }
 }
 
@@ -128,37 +129,22 @@ void left_7Rush(){
  *
  */
 void right_7Rush(){
-    /* Right 7 Rush block ---------------------------------- ~*/
-    chassis.setPose(-54,-7,122);
+    // intake the 3-block stack
+    chassis.setPose(-55, -8, 113);
     conveyorControl(600);
-    chassis.chainToPoint(-24, 24, 1500);
-    pros::delay(250);
-    conveyorControl(0);
-    chassis.chainToHeading(224, 750);
+    chassis.chainToPoint(-22, -22, 1500);
+    chassis.chainToHeading(222, 750);
+    // move to align with long goal omt
     chassis.chainToPoint(-48, -47, 1500);
-    chassis.waitUntilDone();
     chassis.chainToHeading(270, 750);
-    /* for myself Paused at (-48, -47, 1500) before the matchloader + long score*/
     scraper.set_value(true);
-    chassis.chainToPoint(-93, -47, 1500, {.maxSpeed = 50});
-    chassis.chainToPoint(-30, -47, 1500, {.forwards = false});
+    chassis.moveToPoint(-99, -47, 300, {.maxSpeed = 40});
     chassis.waitUntilDone();
-    chassis.chainToPoint(0, -47, 1500, {.forwards = false, .maxSpeed = 10});
-    pto.set_value(true);
-    pros::delay(1500);
-    pto.set_value(false);
-    chassis.chainToPoint(-30, -47, 1500);
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-30, -35, 750);
-    chassis.chainToHeading(90, 750);
-    wing.set_value(true);
-    chassis.chainToPoint(-5, -35, 750);
-    pros::delay(1500);
-    wing.set_value(false);
+
 }
 
 /**
- * @brief runs the left side 4-3 split autonomous.
+ose() * @brief runs the left side 4-3 split autonomous.
  *
  *
  *
