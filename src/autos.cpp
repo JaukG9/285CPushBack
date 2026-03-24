@@ -43,10 +43,35 @@ void left_4Rush(){
  * long goal. Then, wings the blocks into control.
  */
 void right_4Rush(){
-    
-    
-    
-    
+    // intake the 3-block stack
+    chassis.setPose(-47, -17.81, 105);
+    conveyorControl(600);
+    chassis.chainToPoint(-14.86, -24.39, 1500);
+
+    // move to align with long goal
+    chassis.chainToHeading(235, 750);
+    chassis.moveToPoint(-48, -48, 1500);
+    chassis.chainToHeading(270, 750);
+    chassis.moveToPoint(-20, -48, 1200, {.forwards = false});
+    chassis.waitUntilDone();
+
+    // back into long goal while extaking
+    chassis.moveToPoint(-15, -48, 2000, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+
+    // wing blocks into control
+    chassis.chainToPoint(-42, -48, 1000);
+    pto.set_value(false);
+    wing.set_value(true);
+    chassis.chainToHeading(240, 750);
+    chassis.chainToPoint(-25, -35, 1500, {.forwards = false});
+    chassis.turnToHeading(270, 750);
+    wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
 }
 
 /**
@@ -59,32 +84,38 @@ void right_4Rush(){
  *
  */
 void left_7Rush(){
-   /* left 7 Rush block ---------------------------------- ~16 seconds (Need to fix directions)*/
-    chassis.setPose(-140, 20, 65);
+    // intake the 3-block stack
+    chassis.setPose(-55,8,62);
     conveyorControl(600);
+    chassis.chainToPoint(-23, 22, 1500);
     chassis.chainToHeading(320, 750);
-    chassis.chainToPoint(-58, 55, 1500); // 1.5 
-    conveyorBrake();
+
+    // move to align with long goal intaking only 3 blocks
+    chassis.chainToPoint(-47, 47, 1500);
     chassis.chainToHeading(270, 750);
-    chassis.chainToPoint(-120,120, 1500); // 1.5
-    conveyorControl(600);
-    chassis.chainToPoint(-235, 120, 1500, {.maxSpeed = 50}); // 1.5
-    pros::delay(250); // .25
-    conveyorBrake();
-    chassis.chainToPoint(-67, 120, 1500, {.forwards = false}); // 1.5
     chassis.waitUntilDone();
-    chassis.chainToPoint(-10, 120, 1500, {.forwards = false, .maxSpeed = 10}); // 1.5
+    scraper.set_value(true);
+    chassis.chainToPoint(-100, 47, 300, {.maxSpeed = 40});
+
+    // back into long goal while extaking
+    chassis.moveToPoint(-30, 47, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-15, 47, 2000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
-    pros::delay(1500); // 2
+    chassis.waitUntilDone();
+
+    // wing blocks into control
     pto.set_value(false);
-    chassis.chainToPoint(-90, 120, 1500); // 1.5
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-90, 150, 1500); // 1.5
-    chassis.chainToHeading(270, 750);
     wing.set_value(true);
-    chassis.chainToPoint(-30, 150, 1500, {.forwards = false}); // 1.5
-    pros::delay(1500); // 1.5
+    chassis.moveToPoint(-30, 47, 1500, {.forwards = false});
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-30, 58, 1500);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-10, 58, 1500, {.forwards = false});
     wing.set_value(false);
+    while(true){
+        
+    }
 }
 
 /**
@@ -136,44 +167,49 @@ void right_7Rush(){
  *
  */
 void left_43Split(){
+    // intake the 3-block stack
     chassis.setPose(-47, 17.81, 75);
     conveyorControl(600);
     chassis.chainToPoint(-14.86, 24.39, 2000, {.maxSpeed = 60});
-    
 
-    /*
-    chassis.setPose(-47, 17.81, 75);
-    chassis.moveToPoint(-14.86, 24.39, 2000, {.maxSpeed = 52});                       // 1
-    conveyorControl(600);
-    pros::delay(800);                                               // 1.8
-    scraper.set_value(true);
-    chassis.moveToPose(-24, 24, 315, 1500, {.forwards = false});    // 3.3
-    chassis.moveToPoint(-5, 5, 2400, {.forwards = false, .maxSpeed = 50});        // 5
-    pros::delay(800);                                              // 6
+    // align with the middle goal
+    chassis.chainToPoint(-22.75, 22.75, 1000, {.forwards = false});
+    chassis.turnToHeading(315, 750);
+    chassis.moveToPoint(-5, 5, 800, {.forwards = false});
+    chassis.waitUntilDone();
+
+    // back into mid goal while extaking
     trapdoor.set_value(true);
-    pto.set_value(true);
-    pros::delay(1200);                                              // 7
-    conveyorControl(0);
-    pto.set_value(false);
+    chassis.moveToPoint(-5, 5, 1500, {.forwards = false, .maxSpeed = 50});
+    chassis.waitUntilDone();
+
+    // matchload 3 blocks
     trapdoor.set_value(false);
-    chassis.moveToPoint(-44, 49, 1500, {.maxSpeed = 80});                             // 9
-    chassis.turnToHeading(270, 500);
-    conveyorControl(600);
-    chassis.moveToPoint(-62, 48.25, 1200, {.maxSpeed = 40});
-    chassis.waitUntilDone();                                     // 12
-    chassis.moveToPoint(-15, 48.5, 1500, {.forwards = false});        // 13.5
-    pros::delay(750);
+    chassis.chainToPoint(-48, 48, 1500);
+    chassis.chainToHeading(270, 750);
+    scraper.set_value(true);
+    chassis.moveToPoint(-999, 48, 1200, {.maxSpeed = 40});
+    chassis.waitUntilDone();
+
+    // align with long goal and score
+    chassis.chainToPoint(-20, 48, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
-    scraper.set_value(false);
-    pros::delay(1000);
-    chassis.moveToPoint(-42, 48.5, 1000);
+    chassis.waitUntilDone();
+
+    // wing blocks into control
+    chassis.chainToPoint(-42, 48, 1000);
+    pto.set_value(false);
     wing.set_value(true);
-    chassis.turnToHeading(240, 750);
-    chassis.moveToPoint(-25, 61.5, 2000, {.forwards = false});
+    chassis.chainToHeading(240, 750);
+    chassis.chainToPoint(-25, 61, 1500, {.forwards = false});
     chassis.turnToHeading(270, 750);
-    chassis.moveToPoint(-4, 61.5, 10000, {.forwards = false});
     wing.set_value(false);
-    */
+    while(true){
+        chassis.moveToPoint(-4, 61, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
 }
 
 /**
