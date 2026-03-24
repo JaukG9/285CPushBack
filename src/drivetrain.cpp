@@ -3,7 +3,7 @@
 #include "robot/drivetrain.h"
 
 /* creation of drivetrain motor groups */
-pros::MotorGroup left_mg({-14, -15, -16}, pros::MotorGearset::blue);   // left motor group (motors spin clockwise --> wheels spin counterclockwise)
+pros::MotorGroup left_mg({-13, -15, -16}, pros::MotorGearset::blue);   // left motor group (motors spin clockwise --> wheels spin counterclockwise)
 pros::MotorGroup right_mg({17, 18, 19}, pros::MotorGearset::blue);    // right motor group (motors spin counterclockwise --> wheels spin clockwise)
 
 /* creation of drivetrain */

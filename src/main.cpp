@@ -6,6 +6,8 @@
 #include "robot/odometry.h"
 #include "robot/autos.h"
 
+int autonomousSelection = 0;
+
 void initialize(){
 	pros::lcd::initialize();
 	chassis.calibrate();
@@ -21,28 +23,36 @@ void initialize(){
 void disabled(){}
 
 void autonomous(){
-    
+    switch(autonomousSelection){
+        case 0: skip(); break;
+        case 1: left_4Rush(); break;
+        case 2: right_4Rush(); break;
+        case 3: left_7Rush(); break;
+        case 4: right_7Rush(); break;
+        case 5: left_43Split(); break;
+        case 6: right_43Split(); break;
+        case 7: awp(); break;
+        case 8: skills(); break;
+        default: skip(); break;
+    }
 }
 
 void opcontrol(){
+    // boolean variable to 
     bool runningConveyor = false;
+
+    // integer variables to add buffers between button presses for piston changes
     int sCount = 0;
     int tCount = 0;
     int wCount = 0;
     int ptoCount = 0;
     int odomCount = 0;
 
+    // extends the odomLift piston
     odomLift.set_value(true);
 
 	while(true){
         tank();
-
-        // R1 = wing
-        // R2 = full conveyor
-        // L1 = reverse conveyor
-        // L2 = half conveyor
-        // A = trapdoor
-        // X = matchloader
 
         runningConveyor = false;
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
