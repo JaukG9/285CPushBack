@@ -31,7 +31,7 @@ We aim to showcase not just a functioning robot, but also the **engineering proc
 | Eashan Desai | Build Team, Prog Team | 1 |
 | Pavan Gudivada | Build Team  | 1 |
 | Amruta Nangarla | Notebook Lead, Build Team, Prog Team | 3 |
-| Divin Giddaluru | Build Team, Prog Team | 1 |
+| Divin Giddaluru | Build Team, Prog Team | 2 |
 | Reddy Bommala | Build Team | 1 |
 | Kanai Modi | Build Team | 1 |
 
