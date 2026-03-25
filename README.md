@@ -6,7 +6,9 @@ This repository contains all the code, documentation, and resources for our robo
 
 We aim to showcase not just a functioning robot, but also the **engineering process, iterative design, and teamwork** that went into creating it.
 
-![Robot](assets/images/robot.png)
+<p align="center">
+  <img src="https://github.com/JaukG9/285CPushBack/blob/main/robot.webp" alt="Robot">
+</p>
 
 ## Competition Results
 | Location | Place | Award |
