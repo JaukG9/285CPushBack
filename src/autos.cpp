@@ -85,7 +85,7 @@ void right_4Rush(){
  */
 void left_7Rush(){
     // intake the 3-block stack
-    chassis.setPose(-55,8,62);
+    chassis.setPose(-47,17,75);
     conveyorControl(600);
     chassis.chainToPoint(-23, 22, 1500);
     chassis.chainToHeading(320, 750);
@@ -130,7 +130,7 @@ void left_7Rush(){
  */
 void right_7Rush(){
     // intake the 3-block stack
-    chassis.setPose(-55, -8, 113);
+    chassis.setPose(-47, -12, 110);
     conveyorControl(600);
     chassis.chainToPoint(-22, -22, 1500);
     chassis.chainToHeading(222, 750);
@@ -140,7 +140,25 @@ void right_7Rush(){
     scraper.set_value(true);
     chassis.moveToPoint(-99, -47, 300, {.maxSpeed = 40});
     chassis.waitUntilDone();
-
+    // back into long goal while extaking
+    chassis.moveToPoint(-35, -47, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-15, -47, 2000, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+    // wing blocks into control
+    pto.set_value(false);
+    wing.set_value(true);
+    chassis.moveToPoint(-35, -47, 750);
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-35, -35, 750);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-10, -35, 1500, {.forwards = false});
+    wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
 }
 
 /**
