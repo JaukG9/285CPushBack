@@ -72,20 +72,6 @@ void wingChange(){
 }
 
 /**
- * @brief switches the state of the PTO piston.
- *
- * This function first changes the global boolean variable ptoActivated to its
- * opposite state (true or false), and then sets the piston used for the PTO
- * (on TriPort E) to the new value of ptoActivated (true = extended, false = unextended).
- *
- * This will activate or deactivate the PTO mechanism.
- */
-void ptoChange(){
-    ptoActivated = !ptoActivated;
-    pto.set_value(ptoActivated);
-}
-
-/**
  * @brief switches the state of the intake funnel piston.
  *
  * This function first changes the global boolean variable intakeFunnelActivated

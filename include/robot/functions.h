@@ -9,7 +9,6 @@ void conveyorBrake();
 void scraperChange();
 void trapdoorChange();
 void wingChange();
-void ptoChange();
 void doubleParkChange();
 void odomLiftChange();
 void tank();

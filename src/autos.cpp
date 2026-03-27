@@ -166,7 +166,7 @@ void right_7Rush(){
 
 
 /**
-ose() * @brief runs the left side 4-3 split autonomous.
+ * @brief runs the left side 4-3 split autonomous.
  *
  *
  *
@@ -235,13 +235,13 @@ void right_43Split(){
     conveyorControl(600);
     chassis.turnToHeading(230, 2000);
     chassis.moveToPoint(-5, -5, 2000, {.forwards = false});
-    ptoChange();
+    pto.set_value(true);
     chassis.waitUntilDone();
     chassis.moveToPoint(-45, -47, 2000, {.forwards = false});
     chassis.moveToPoint(-62, -47, 2000);
     conveyorControl(600);
     chassis.moveToPoint(-29, -47, 2000, {.forwards = false});
-    ptoChange();
+    pto.set_value(false);
     chassis.moveToPoint(-33, -59, 2000);
     chassis.turnToHeading(90, 2000);
     wing.set_value(true);
@@ -258,7 +258,7 @@ void right_43Split(){
  *
  *
  */
-void awp(){
+void awp_left(){
     // intake the matchloader
     chassis.setPose(-55, 16, 0);
     chassis.chainToPoint(-55, 47, 1000);
@@ -271,8 +271,9 @@ void awp(){
     
     // move to align with long goal & score
     chassis.moveToPoint(-15, 47, 1500, {.forwards = false, .maxSpeed = 30});
-    ptoChange();
-    chassis.waitUntilDone();
+    pto.set_value(true);
+    pros::delay(1000);
+    pto.set_value(false);
     
     //intake the 3-block stack x2
     chassis.chainToPoint(-34.5, 47, 1500);
@@ -284,17 +285,44 @@ void awp(){
     chassis.chainToPoint(-22.5, 22, 1500);
     chassis.turnToHeading(227.5, 750);
     chassis.moveToPoint(0, 0, 1500, {.forwards = false});
-    ptoChange();
-    chassis.waitUntilDone();
+    pto.set_value(true);
+    pros::delay(1000);
+    pto.set_value(false);
 
     // intake the matchloader
     chassis.chainToPoint(-47, -47, 2000);
     chassis.turnToHeading(270, 750);
     chassis.moveToPoint(-100, -47, 1500, {.maxSpeed = 40});
     chassis.chainToPoint(-33, -47, 1500, {.forwards = false, .maxSpeed = 30});
-    ptoChange();
-    chassis.waitUntilDone();
+    pto.set_value(true);
+    pros::delay(1000);
+    pto.set_value(false);
 }
+
+/**
+ * @brief runs the solo AWP (right side).
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+void awp_right(){
+    // intake the matchloader
+    chassis.setPose(-55, -15, 180);
+    chassis.chainToPoint(-55, -47, 1500);
+    chassis.turnToHeading(270, 750);
+    scraper.set_value(true);
+    conveyorControl(600);
+    chassis.moveToPoint(-100, -47, 300, {.maxSpeed = 40});
+    
+    // move to align with long goal & score
+    chassis.chainToPoint(-33, -47, 1500, {.forwards = false});
+
+}
+
 
 /**
  * @brief runs the programming skills autonomous.
@@ -307,22 +335,27 @@ void awp(){
  */
 void skills(){
    /* 96 Route attempt skills auton*/
+   
    // in-take parking
-   chassis.setPose(-63,13,0);
-   chassis.chainToPoint(-63,25,1500);
+   chassis.setPose(-45,0,0);
+   chassis.chainToPoint(-65,0,1500);
    conveyorControl(600);
    pros::delay(750);
    scraper.set_value(true);
    pros::delay(750);
    scraper.set_value(false);
+   
    // Pick up 1 block from the 4-stack
    chassis.chainToHeading(85, 750);
    chassis.chainToPoint(-27, 27, 1500);
    chassis.chainToHeading(315, 1500);
    chassis.moveToPoint(-12, 12, 750, {.forwards = false});
    chassis.waitUntilDone();
-   // midtake here (dont have command)
+   trapdoor.set_value(true);
+   pto.set_value(true);
    chassis.moveToPoint(0,0, 3000, {.forwards = false, .maxSpeed = 30});
+   trapdoor.set_value(false);
+   pto.set_value(false);
    // Matchload all blocks
    chassis.chainToPoint(-47, -47, 1500);
    chassis.chainToHeading(270, 1500);
@@ -330,6 +363,7 @@ void skills(){
    scraper.set_value(true);
    chassis.moveToPoint(-60, -47, 1500);
    chassis.moveToPoint(-99, -47, 3000, {.maxSpeed = 40});
+   
    // Extake on other side of long goal
    chassis.chainToHeading(62, 750);
    chassis.chainToPoint(-33, 60, 1500);
@@ -356,12 +390,14 @@ void skills(){
    pros::delay(1500);
    pto.set_value(false);
    scraper.set_value(false);
+   
    // Clear alliance side parking
    chassis.moveToPoint(42, 47, 750);
    chassis.chainToHeading(132, 750);
    chassis.chainToPoint(66, 24, 1500);
    chassis.waitUntilDone();
    chassis.chainToPoint(66, -33, 1500);
+   
    // Score Lower Center Goal and intake one block from 4-stack
    conveyorControl(600);
    chassis.chainToHeading(289, 750);
@@ -374,6 +410,7 @@ void skills(){
    chassis.waitUntilDone();
    chassis.moveToPoint(0,0, 3000);
    conveyorControl(-600);
+   
    // Matchload on long goal
    chassis.chainToPoint(27,27, 1500, {.forwards = false});
    chassis.chainToHeading(165, 750);
@@ -384,6 +421,7 @@ void skills(){
    scraper.set_value(true);
    conveyorControl(600);
    chassis.moveToPoint(99, -47, 3000, {.maxSpeed = 40});
+   
    // Extake on other side of long goal
    chassis.moveToPoint(47, -47, 1500, {.forwards = false});
    chassis.chainToHeading(235, 750);
@@ -395,6 +433,8 @@ void skills(){
    chassis.chainToHeading(270, 750);
    chassis.moveToPoint(-30, -47, 1500);
    chassis.waitUntilDone();
+
+
     /* skills auton - right start  -------------  maximum total time to take 
         //** left alliance side /
     chassis.setPose(-48, -14.2, 180);
