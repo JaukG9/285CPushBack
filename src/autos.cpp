@@ -357,7 +357,7 @@ void skills(){
    pto.set_value(false);
    scraper.set_value(false);
    // Clear alliance side parking
-   chassis.moveToPoint(42, 47, 750,);
+   chassis.moveToPoint(42, 47, 750);
    chassis.chainToHeading(132, 750);
    chassis.chainToPoint(66, 24, 1500);
    chassis.waitUntilDone();
