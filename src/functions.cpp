@@ -28,6 +28,21 @@ void conveyorBrake(){
 }
 
 /**
+ * @brief switches the state of the PTO piston.
+ *
+ * This function first changes the global boolean variable ptoActivated
+ * to its opposite state (true or false), and then sets the piston attached to
+ * the PTO (on TriPort E) to the new value of ptoActivated (true = extended,
+ * false = unextended).
+ *
+ * This will activate or deactivate the PTO.
+ */
+void ptoChange(){
+    ptoActivated = !ptoActivated;
+    pto.set_value(ptoActivated);
+}
+
+/**
  * @brief switches the state of the scraper piston.
  *
  * This function first changes the global boolean variable scraperActivated to 

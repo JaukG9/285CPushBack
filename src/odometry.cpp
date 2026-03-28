@@ -3,7 +3,7 @@
 #include "robot/drivetrain.h"
 #include "robot/odometry.h"
 
-/* odometry */
+// odometry
 pros::Imu imu(13); // imu
 pros::Rotation vertical_sensor(12);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_2, 1.5);
@@ -41,6 +41,7 @@ lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0 // maximum acceleration (slew)
 );
 
+// steering curve
 lemlib::ExpoDriveCurve steer_curve(10, // joystick deadband out of 127
                                   10, // minimum output where drivetrain will move out of 127
                                   1.019 // expo curve gain

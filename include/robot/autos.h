@@ -10,6 +10,6 @@ void left_7Rush();
 void right_7Rush();
 void left_43Split();
 void right_43Split();
-void awp_left();
-void awp_right();
+void left_awp();
+void right_awp();
 void skills();

@@ -31,8 +31,9 @@ void autonomous(){
         case 4: right_7Rush(); break;
         case 5: left_43Split(); break;
         case 6: right_43Split(); break;
-        case 7: awp(); break;
-        case 8: skills(); break;
+        case 7: left_awp(); break;
+        case 8: right_awp(); break;
+        case 9: skills(); break;
         default: skip(); break;
     }
 }
@@ -57,16 +58,12 @@ void opcontrol(){
         runningConveyor = false;
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
             if(!ptoActivated){
-                pto.set_value(true);
-                ptoActivated = true;
+                ptoChange();
             }
             conveyorControl(600);
             runningConveyor = true;
-        }else{
-            if(ptoActivated){
-                pto.set_value(false);
-                ptoActivated = false;
-            }
+        }else if(ptoActivated){
+            ptoChange();
         }
 
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
@@ -75,8 +72,13 @@ void opcontrol(){
         }
 
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+            if(!intakeFunnelActivated){
+                intakeFunnelChange();
+            }
             conveyorControl(-600);
             runningConveyor = true;
+        }else if(intakeFunnelActivated){
+            intakeFunnelChange();
         }
 
         if(!runningConveyor){
