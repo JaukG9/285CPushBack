@@ -39,6 +39,14 @@ void autonomous(){
 }
 
 void opcontrol(){
+    scraper.set_value(false);
+    trapdoor.set_value(false);
+    pto.set_value(false);
+    doublePark.set_value(false);
+    odomLift.set_value(true);
+    wing.set_value(true);
+    wingActivated = true;
+
     // boolean variable to 
     bool runningConveyor = false;
 
