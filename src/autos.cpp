@@ -258,7 +258,7 @@ void right_43Split(){
  *
  *
  */
-void awp_left(){
+void left_awp(){
     // intake the matchloader
     chassis.setPose(-55, 16, 0);
     chassis.chainToPoint(-55, 47, 1000);
@@ -309,7 +309,7 @@ void awp_left(){
  *
  */
 
-void awp_right(){
+void right_awp(){
     // intake the matchloader
     chassis.setPose(-55, -15, 180);
     chassis.chainToPoint(-55, -47, 1500);
