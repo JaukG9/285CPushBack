@@ -6,7 +6,16 @@
 #include "robot/odometry.h"
 #include "robot/autos.h"
 
-int autonomousSelection = 0;
+int autonomousType = 0;
+int autonomousSelection = -1;
+bool autonTypeSelected = false, autonSelected = false;
+
+Button autonType[] = {
+    Button(10, 10, 150, 50, "Left", pros::Color::white, pros::Color::black),
+    Button(170, 10, 150, 50, "Right", pros::Color::white, pros::Color::black),
+    Button(10, 70, 150, 50, "Skip", pros::Color::white, pros::Color::black),
+    Button(170, 70, 150, 50, "Skills", pros::Color::white, pros::Color::black)
+}, auton[] = {};
 
 void initialize(){
 	pros::lcd::initialize();
@@ -34,7 +43,7 @@ void autonomous(){
         case 7: left_awp(); break;
         case 8: right_awp(); break;
         case 9: skills(); break;
-        default: skip(); break;
+        default: break;
     }
 }
 
@@ -52,6 +61,7 @@ void opcontrol(){
 
     // integer variables to add buffers between button presses for piston changes
     int sCount = 0;
+    int tCount = 0;
     int wCount = 0;
     int ptoCount = 0;
     int odomCount = 0;
@@ -74,7 +84,9 @@ void opcontrol(){
         }
 
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-            conveyorControl(600);
+            if(!trapdoorActivated){
+                conveyorControl(600);   
+            }else{conveyorControl(450);}
             runningConveyor = true;
         }
 
@@ -88,21 +100,15 @@ void opcontrol(){
             intakeFunnelChange();
         }
 
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
-            if(!trapdoorActivated){
-                trapdoorChange();
-            }
-            conveyorControl(400);
-            runningConveyor = true;
-        }else if(trapdoorActivated){
-            trapdoorChange();
-        }
-
         if(!runningConveyor){
             conveyorBrake();
         }
 
         /* pistons (scraper & midtake) */
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && tCount > 25){
+            trapdoorChange();
+            tCount = 0;
+        }else if(tCount <= 25){tCount++;}
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) && sCount > 25){
             scraperChange();
             sCount = 0;

@@ -480,3 +480,78 @@ void skills(){
     chassis.waitUntilDone();
     chassis.setPose(60, 0, 90);
 }
+
+int autonSelector(){
+    int autonomousType = 0;
+    int autonomousSelection = -1;
+    bool autonTypeSelected = false, autonSelected = false;
+
+    Button autonType[] = {
+        Button(10, 10, 150, 50, "Left", pros::Color::white, pros::Color::black),
+        Button(170, 10, 150, 50, "Right", pros::Color::white, pros::Color::black),
+        Button(10, 70, 150, 50, "Skip", pros::Color::white, pros::Color::black),
+        Button(170, 70, 150, 50, "Skills", pros::Color::white, pros::Color::black)
+    }, auton[] = {};
+
+    while(!autonTypeSelected){
+        pros::screen::erase();
+        for(int i = 0; i < 4; i++){
+            autonType[i].render();
+            if(autonType[i].isClicked()){
+                autonomousType = i;
+                autonTypeSelected = true;
+            }
+        }
+        pros::delay(20);
+    }
+
+    switch(autonomousType){
+        case 0: {
+            Button auton[] = {
+                Button(10, 10, 150, 50, "Left 4 Rush", pros::Color::white, pros::Color::black),
+                Button(170, 10, 150, 50, "Left 7 Rush", pros::Color::white, pros::Color::black),
+                Button(10, 70, 150, 50, "Left Split", pros::Color::white, pros::Color::black),
+                Button(170, 70, 150, 50, "Left AWP", pros::Color::white, pros::Color::black)
+            };
+            break;
+        }
+        case 1: {
+            Button auton[] = {
+                Button(10, 10, 150, 50, "Right 4 Rush", pros::Color::white, pros::Color::black),
+                Button(170, 10, 150, 50, "Right 7 Rush", pros::Color::white, pros::Color::black),
+                Button(10, 70, 150, 50, "Right Split", pros::Color::white, pros::Color::black),
+                Button(170, 70, 150, 50, "Right AWP", pros::Color::white, pros::Color::black)
+            };
+            break;
+        }
+        case 2:
+            autonomousSelection = 9;
+            autonSelected = true;
+            break;
+        case 3:
+            autonomousSelection = 0;
+            autonSelected = true;
+            break;
+    }
+
+    while(!autonSelected){
+        pros::screen::erase();
+
+        for(int i = 0; i < 4; i++){
+            auton[i].render();
+            if(auton[i].isClicked()){
+                if(autonomousType == 0){
+                    autonomousSelection = i * 2 + 1;
+                    auton[i].buttonColor = pros::Color::green;
+                    autonSelected = true;
+                }else if(autonomousType == 1){
+                    autonomousSelection = i * 2 + 2;
+                    auton[i].buttonColor = pros::Color::green;
+                    autonSelected = true;
+                }
+            }
+        }
+
+        pros::delay(20);
+    }
+}
