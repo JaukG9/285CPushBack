@@ -265,18 +265,22 @@ void right_43Split(){
     pto.set_value(true);
     chassis.waitUntilDone();
     /*intake from match loader*/
-    chassis.moveToPoint(-45, -47, 2000, {.forwards = false});
-    chassis.moveToPoint(-62, -47, 2000);
+    chassis.moveToPoint(-45, -48, 2000, {.forwards = false});
+    chassis.moveToPoint(-62, -48, 2000);
     conveyorControl(600);
     /*extake*/
-    chassis.moveToPoint(-29, -47, 2000, {.forwards = false});
+    chassis.moveToPoint(-29, -48, 2000, {.forwards = false});
     pto.set_value(false);
     /*maneuver and wing*/
     chassis.moveToPoint(-33, -59, 2000);
     chassis.turnToHeading(90, 2000);
     wing.set_value(true);
-    chassis.moveToPoint(-8, -47, 2000, {.forwards = false});
+    chassis.moveToPoint(-8, -48, 2000, {.forwards = false});
     wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-4, 48, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
 }
 
 /**
