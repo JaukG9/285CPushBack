@@ -352,7 +352,7 @@ void right_awp(){
     // align with long-goal and score
     chassis.moveToPoint(-30, -48, 1500, {.forwards = false});
     scraper.set_value(false);
-    chassis.moveToPoint(-15, -48, 3000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-15, -48, 4000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
     pto.set_value(false);
