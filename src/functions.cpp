@@ -98,7 +98,7 @@ void wingChange(){
  */
 void intakeFunnelChange(){
     intakeFunnelActivated = !intakeFunnelActivated;
-    pto.set_value(intakeFunnelActivated);
+    intakeFunnel.set_value(intakeFunnelActivated);
 }
 
 /**
