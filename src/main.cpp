@@ -52,7 +52,6 @@ void opcontrol(){
 
     // integer variables to add buffers between button presses for piston changes
     int sCount = 0;
-    int tCount = 0;
     int wCount = 0;
     int ptoCount = 0;
     int odomCount = 0;
@@ -89,15 +88,21 @@ void opcontrol(){
             intakeFunnelChange();
         }
 
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+            if(!trapdoorActivated){
+                trapdoorChange();
+            }
+            conveyorControl(400);
+            runningConveyor = true;
+        }else if(trapdoorActivated){
+            trapdoorChange();
+        }
+
         if(!runningConveyor){
             conveyorBrake();
         }
 
         /* pistons (scraper & midtake) */
-        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) && tCount > 25){
-            trapdoorChange();
-            tCount = 0;
-        }else if(tCount <= 25){tCount++;}
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) && sCount > 25){
             scraperChange();
             sCount = 0;

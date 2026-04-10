@@ -135,7 +135,7 @@ void odomLiftChange(){
  *
  * This function detects vertical movements on the joysticks of the controller, and
  * based on how much each joystick is moved up or down, supplies voltage to the drivetrain
- * motors of teh corresponding side. The left side of the drive train is controlled by the
+ * motors of the corresponding side. The left side of the drive train is controlled by the
  * left joystick, and the right side of the drive train is controlled by the right joystick.
  * Down reverses the wheels, and up moves them forward. When the joysticks have unequal
  * magnitudes, the robot will turn in the direction of the one with the greater magnitude.

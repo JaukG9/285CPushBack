@@ -164,7 +164,6 @@ void right_7Rush(){
     }
 }
 
-
 /**
  * @brief runs the left side 4-3 split autonomous.
  *
