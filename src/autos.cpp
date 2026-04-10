@@ -291,22 +291,22 @@ void right_43Split(){
 void left_awp(){
     // intake the matchloader
     chassis.setPose(-55, 16, 0);
-    chassis.chainToPoint(-55, 47, 1000);
+    chassis.chainToPoint(-55, 48, 1000);
     chassis.chainToHeading(270, 750);
     scraper.set_value(true);
     conveyorControl(600);
-    chassis.moveToPoint(-100, 47, 1500, {.maxSpeed = 40});
-    chassis.chainToPoint(-34.5, 47, 1500, {.forwards = false});
+    chassis.moveToPoint(-100, 48, 1500, {.maxSpeed = 40});
+    chassis.chainToPoint(-34.5, 48, 1500, {.forwards = false});
     chassis.waitUntilDone();
     
     // move to align with long goal & score
-    chassis.moveToPoint(-15, 47, 1500, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     pros::delay(1000);
     pto.set_value(false);
     
     //intake the 3-block stack x2
-    chassis.chainToPoint(-34.5, 47, 1500);
+    chassis.chainToPoint(-34.5, 48, 1500);
     chassis.turnToHeading(154, 750);
     chassis.chainToPoint(-22.5, 22, 1000);
     chassis.turnToHeading(180, 750);
@@ -320,10 +320,10 @@ void left_awp(){
     pto.set_value(false);
 
     // intake the matchloader
-    chassis.chainToPoint(-47, -47, 2000);
+    chassis.chainToPoint(-47, -48, 2000);
     chassis.turnToHeading(270, 750);
-    chassis.moveToPoint(-100, -47, 1500, {.maxSpeed = 40});
-    chassis.chainToPoint(-33, -47, 1500, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-100, -48, 1500, {.maxSpeed = 40});
+    chassis.chainToPoint(-33, -48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     pros::delay(1000);
     pto.set_value(false);
