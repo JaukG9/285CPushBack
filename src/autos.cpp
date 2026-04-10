@@ -229,18 +229,23 @@ void left_43Split(){
  *
  */
 void right_43Split(){
+    /*get first 3 blocks*/
     chassis.setPose(-51.5, -10, 120);
     chassis.moveToPoint(-22, -23, 2000, {.maxSpeed = 70});
     conveyorControl(600);
+    /*extake*/
     chassis.turnToHeading(230, 2000);
     chassis.moveToPoint(-5, -5, 2000, {.forwards = false});
     pto.set_value(true);
     chassis.waitUntilDone();
+    /*intake from match loader*/
     chassis.moveToPoint(-45, -47, 2000, {.forwards = false});
     chassis.moveToPoint(-62, -47, 2000);
     conveyorControl(600);
+    /*extake*/
     chassis.moveToPoint(-29, -47, 2000, {.forwards = false});
     pto.set_value(false);
+    /*maneuver and wing*/
     chassis.moveToPoint(-33, -59, 2000);
     chassis.turnToHeading(90, 2000);
     wing.set_value(true);
