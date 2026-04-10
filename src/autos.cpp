@@ -340,17 +340,53 @@ void left_awp(){
  */
 
 void right_awp(){
-    // intake the matchloader
-    chassis.setPose(-55, -15, 180);
-    chassis.chainToPoint(-55, -47, 1500);
+    // intake matchloader
+    chassis.setPose(-55, -8, 180);
+    conveyorControl(600);
+    chassis.chainToPoint(-55, -48, 1500);
     chassis.turnToHeading(270, 750);
     scraper.set_value(true);
-    conveyorControl(600);
-    chassis.moveToPoint(-100, -47, 300, {.maxSpeed = 40});
-    
-    // move to align with long goal & score
-    chassis.chainToPoint(-33, -47, 1500, {.forwards = false});
+    chassis.moveToPoint(-99, -48, 1500, {.maxSpeed = 40});
+    chassis.waitUntilDone();
 
+    // align with long-goal and score
+    chassis.moveToPoint(-30, -48, 1500, {.forwards = false});
+    scraper.set_value(false);
+    chassis.moveToPoint(-15, -48, 3000, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+    pto.set_value(false);
+
+    // Pick up 3-stack twice
+    chassis.moveToPoint(-55, -48, 1500);
+    chassis.chainToHeading(50, 750);
+    chassis.chainToPoint(-22, -22, 1500);
+    chassis.chainToHeading(0, 750);
+    chassis.moveToPoint(-22, 22, 1500);
+    
+    // Score in mid-goal (3 blocks only)
+    chassis.turnToHeading(315, 1500);
+    chassis.moveToPoint(-12, 12, 1500, {.forwards = false});
+    trapdoor.set_value(true);
+    conveyorControl(300);
+    chassis.moveToPoint(0,0, 1500, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+
+    // intake matchloader (3 blocks)
+    conveyorControl(600);
+    chassis.chainToPoint(-45, 48, 1500);
+    chassis.turnToHeading(270, 750);
+    scraper.set_value(true);
+    chassis.moveToPoint(-60, 48, 1500);
+    chassis.moveToPoint(-99, 48, 1500, {.maxSpeed = 40});
+    chasiss.waitUntilDone();
+    
+    // score in long-goal (6 blocks)
+    chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
+    chassis.moveToPoint(-15, 48, 15000, {.forwards = false, maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
 }
 
 
