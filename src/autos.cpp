@@ -24,15 +24,41 @@ void skip(){
  * long goal. Then, wings the blocks into control.
  */
 void left_4Rush(){
+
+    //in-take the 3 block stack
     chassis.setPose(-50.715, 4.034, 0); /*first position keep exact*/
     conveyorControl(600);
     chassis.chainToHeading(60, 750);
     chassis.chainToPoint(-22.5, 22, 1500);
     conveyorBrake();
+
+    //move to align with the long goal
     chassis.chainToHeading(327, 750);
     chassis.chainToPoint(-41, 48, 1500);
     conveyorBrake();
     chassis.chainToHeading(90, 750);
+    chassis.moveToPoint(-20, 48, 1500);
+    chassis.waitUntilDone();
+    
+    //back into long goal while extaking
+    chassis.moveToPoint(-15, -48, 2000, maxSpeed = 30);
+    pto.set_value(true);
+    chassis.waitUntilDone();
+
+    // wing blocks into control
+    pto.set_value(false);
+    wing.set_value(true);
+    chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-30, 58, 1500);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-10, 58, 1500, {.forwards = false});
+    wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-4, 58, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    
+
 }
 
 /**
@@ -69,7 +95,7 @@ void right_4Rush(){
     chassis.turnToHeading(270, 750);
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
+        chassis.moveToPoint(-25, -35, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
