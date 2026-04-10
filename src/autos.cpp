@@ -164,7 +164,6 @@ void right_7Rush(){
     }
 }
 
-
 /**
  * @brief runs the left side 4-3 split autonomous.
  *
@@ -308,7 +307,6 @@ void awp_left(){
  *
  *
  */
-
 void awp_right(){
     // intake the matchloader
     chassis.setPose(-55, -15, 180);
