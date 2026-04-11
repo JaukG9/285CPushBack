@@ -4,8 +4,8 @@
 #include "robot/odometry.h"
 
 // odometry
-pros::Imu imu(13); // imu
-pros::Rotation vertical_sensor(12);
+pros::Imu imu(11); // imu
+pros::Rotation vertical_sensor(2);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_sensor, lemlib::Omniwheel::NEW_2, 1.5);
 
 // odometry settings
@@ -30,6 +30,18 @@ lemlib::ControllerSettings lateral_controller(5, // proportional gain (kP)
 );
 
 // angular PID controller
+lemlib::ControllerSettings angular_controller(2, // proportional gain (kP)
+                                              0, // integral gain (kI)
+                                              10, // derivative gain (kD)
+                                              0, // anti windup
+                                              0, // small error range, in degrees
+                                              0, // small error range timeout, in milliseconds
+                                              0, // large error range, in degrees
+                                              0, // large error range timeout, in milliseconds
+                                              0 // maximum acceleration (slew)
+);
+
+/*
 lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               0, // integral gain (kI)
                                               60, // derivative gain (kD)
@@ -40,6 +52,7 @@ lemlib::ControllerSettings angular_controller(6, // proportional gain (kP)
                                               500, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
+*/
 
 // steering curve
 lemlib::ExpoDriveCurve steer_curve(10, // joystick deadband out of 127

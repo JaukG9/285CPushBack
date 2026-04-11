@@ -24,7 +24,6 @@ void skip(){
  * long goal. Then, wings the blocks into control.
  */
 void left_4Rush(){
-
     //in-take the 3 block stack
     chassis.setPose(-50.715, 4.034, 0); /*first position keep exact*/
     conveyorControl(600);
@@ -41,7 +40,7 @@ void left_4Rush(){
     chassis.waitUntilDone();
     
     //back into long goal while extaking
-    chassis.moveToPoint(-15, -48, 2000, maxSpeed = 30);
+    chassis.moveToPoint(-15, -48, 2000, {.maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
 
@@ -57,8 +56,7 @@ void left_4Rush(){
     while(true){
         chassis.moveToPoint(-4, 58, 200, {.forwards = false});
         chassis.waitUntilDone();
-    
-
+    }
 }
 
 /**
@@ -384,11 +382,11 @@ void right_awp(){
     scraper.set_value(true);
     chassis.moveToPoint(-60, 48, 1500);
     chassis.moveToPoint(-99, 48, 1500, {.maxSpeed = 40});
-    chasiss.waitUntilDone();
+    chassis.waitUntilDone();
     
     // score in long-goal (6 blocks)
     chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
-    chassis.moveToPoint(-15, 48, 15000, {.forwards = false, maxSpeed = 30});
+    chassis.moveToPoint(-15, 48, 15000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
 }
@@ -552,9 +550,10 @@ void skills(){
     chassis.setPose(60, 0, 90);
 }
 
-int autonSelector(){
+int autonomousSelection = -1;
+void autonSelector(void*){
     int autonomousType = 0;
-    int autonomousSelection = -1;
+    autonomousSelection = -1;
     bool autonTypeSelected = false, autonSelected = false;
 
     Button autonType[] = {
@@ -562,10 +561,9 @@ int autonSelector(){
         Button(170, 10, 150, 50, "Right", pros::Color::white, pros::Color::black),
         Button(10, 70, 150, 50, "Skip", pros::Color::white, pros::Color::black),
         Button(170, 70, 150, 50, "Skills", pros::Color::white, pros::Color::black)
-    }, auton[] = {};
+    };
 
     while(!autonTypeSelected){
-        pros::screen::erase();
         for(int i = 0; i < 4; i++){
             autonType[i].render();
             if(autonType[i].isClicked()){
@@ -575,41 +573,31 @@ int autonSelector(){
         }
         pros::delay(20);
     }
+    pros::screen::erase();
+
+    Button* auton = nullptr;
+    static Button leftAutons[] = {
+        Button(10, 10, 150, 50, "Left 4 Rush", pros::Color::white, pros::Color::black),
+        Button(170, 10, 150, 50, "Left 7 Rush", pros::Color::white, pros::Color::black),
+        Button(10, 70, 150, 50, "Left Split", pros::Color::white, pros::Color::black),
+        Button(170, 70, 150, 50, "Left AWP", pros::Color::white, pros::Color::black)
+    };
+    static Button rightAutons[] = {
+        Button(10, 10, 150, 50, "Right 4 Rush", pros::Color::white, pros::Color::black),
+        Button(170, 10, 150, 50, "Right 7 Rush", pros::Color::white, pros::Color::black),
+        Button(10, 70, 150, 50, "Right Split", pros::Color::white, pros::Color::black),
+        Button(170, 70, 150, 50, "Right AWP", pros::Color::white, pros::Color::black)
+    };
 
     switch(autonomousType){
-        case 0: {
-            Button auton[] = {
-                Button(10, 10, 150, 50, "Left 4 Rush", pros::Color::white, pros::Color::black),
-                Button(170, 10, 150, 50, "Left 7 Rush", pros::Color::white, pros::Color::black),
-                Button(10, 70, 150, 50, "Left Split", pros::Color::white, pros::Color::black),
-                Button(170, 70, 150, 50, "Left AWP", pros::Color::white, pros::Color::black)
-            };
-            break;
-        }
-        case 1: {
-            Button auton[] = {
-                Button(10, 10, 150, 50, "Right 4 Rush", pros::Color::white, pros::Color::black),
-                Button(170, 10, 150, 50, "Right 7 Rush", pros::Color::white, pros::Color::black),
-                Button(10, 70, 150, 50, "Right Split", pros::Color::white, pros::Color::black),
-                Button(170, 70, 150, 50, "Right AWP", pros::Color::white, pros::Color::black)
-            };
-            break;
-        }
-        case 2:
-            autonomousSelection = 9;
-            autonSelected = true;
-            break;
-        case 3:
-            autonomousSelection = 0;
-            autonSelected = true;
-            break;
+        case 0: auton = leftAutons; break;
+        case 1: auton = rightAutons; break;
+        case 2: autonomousSelection = 9; autonSelected = true; break;
+        case 3: autonomousSelection = 0; autonSelected = true; break;
     }
 
-    while(!autonSelected){
-        pros::screen::erase();
-
+    while(!autonSelected && autonTypeSelected){
         for(int i = 0; i < 4; i++){
-            auton[i].render();
             if(auton[i].isClicked()){
                 if(autonomousType == 0){
                     autonomousSelection = i * 2 + 1;
@@ -621,6 +609,7 @@ int autonSelector(){
                     autonSelected = true;
                 }
             }
+            auton[i].render();
         }
 
         pros::delay(20);

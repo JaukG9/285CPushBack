@@ -6,17 +6,6 @@
 #include "robot/odometry.h"
 #include "robot/autos.h"
 
-int autonomousType = 0;
-int autonomousSelection = -1;
-bool autonTypeSelected = false, autonSelected = false;
-
-Button autonType[] = {
-    Button(10, 10, 150, 50, "Left", pros::Color::white, pros::Color::black),
-    Button(170, 10, 150, 50, "Right", pros::Color::white, pros::Color::black),
-    Button(10, 70, 150, 50, "Skip", pros::Color::white, pros::Color::black),
-    Button(170, 70, 150, 50, "Skills", pros::Color::white, pros::Color::black)
-}, auton[] = {};
-
 void initialize(){
 	pros::lcd::initialize();
 	chassis.calibrate();
@@ -27,11 +16,15 @@ void initialize(){
     pto.set_value(false);
     doublePark.set_value(false);
     odomLift.set_value(false);
+
+    pros::Task selector(autonSelector);
 }
 
 void disabled(){}
 
 void autonomous(){
+    pros::screen::erase();
+
     switch(autonomousSelection){
         case 0: skip(); break;
         case 1: left_4Rush(); break;
