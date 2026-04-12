@@ -7,7 +7,7 @@
 #include "robot/autos.h"
 
 void initialize(){
-	pros::lcd::initialize();
+	//pros::lcd::initialize();
 	chassis.calibrate();
 
     scraper.set_value(false);
@@ -23,7 +23,7 @@ void initialize(){
 void disabled(){}
 
 void autonomous(){
-    pros::screen::erase();
+    //pros::screen::erase();
 
     switch(autonomousSelection){
         case 0: skip(); break;
@@ -38,6 +38,15 @@ void autonomous(){
         case 9: skills(); break;
         default: break;
     }
+
+    /*
+    chassis.setPose(0, 0, 0);
+    chassis.turnToHeading(90, 1500);
+    chassis.waitUntilDone();
+    pros::delay(500);
+    
+    pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
+    */
 }
 
 void opcontrol(){

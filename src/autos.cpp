@@ -557,12 +557,14 @@ void autonSelector(void*){
     bool autonTypeSelected = false, autonSelected = false;
 
     Button autonType[] = {
-        Button(10, 10, 150, 50, "Left", pros::Color::white, pros::Color::black),
-        Button(170, 10, 150, 50, "Right", pros::Color::white, pros::Color::black),
-        Button(10, 70, 150, 50, "Skip", pros::Color::white, pros::Color::black),
-        Button(170, 70, 150, 50, "Skills", pros::Color::white, pros::Color::black)
+        Button(10, 10, 225, 105, "Left", pros::Color::pale_violet_red, pros::Color::black),
+        Button(245, 10, 225, 105, "Right", pros::Color::cyan, pros::Color::black),
+        Button(10, 125, 225, 105, "Skip", pros::Color::white, pros::Color::black),
+        Button(245, 125, 225, 105, "Skills", pros::Color::light_green, pros::Color::black)
     };
 
+    pros::screen::set_pen(pros::Color::light_gray);
+    pros::screen::fill_rect(0, 0, 480, 240);
     while(!autonTypeSelected){
         for(int i = 0; i < 4; i++){
             autonType[i].render();
@@ -577,16 +579,16 @@ void autonSelector(void*){
 
     Button* auton = nullptr;
     static Button leftAutons[] = {
-        Button(10, 10, 150, 50, "Left 4 Rush", pros::Color::white, pros::Color::black),
-        Button(170, 10, 150, 50, "Left 7 Rush", pros::Color::white, pros::Color::black),
-        Button(10, 70, 150, 50, "Left Split", pros::Color::white, pros::Color::black),
-        Button(170, 70, 150, 50, "Left AWP", pros::Color::white, pros::Color::black)
+        Button(10, 10, 225, 105, "Left 4 Rush", pros::Color::peach_puff, pros::Color::black),
+        Button(245, 10, 225, 105, "Left 7 Rush", pros::Color::peach_puff, pros::Color::black),
+        Button(10, 125, 225, 105, "Left Split", pros::Color::peach_puff, pros::Color::black),
+        Button(245, 125, 225, 105, "Left AWP", pros::Color::peach_puff, pros::Color::black)
     };
     static Button rightAutons[] = {
-        Button(10, 10, 150, 50, "Right 4 Rush", pros::Color::white, pros::Color::black),
-        Button(170, 10, 150, 50, "Right 7 Rush", pros::Color::white, pros::Color::black),
-        Button(10, 70, 150, 50, "Right Split", pros::Color::white, pros::Color::black),
-        Button(170, 70, 150, 50, "Right AWP", pros::Color::white, pros::Color::black)
+        Button(10, 10, 225, 105, "Right 4 Rush", pros::Color::peach_puff, pros::Color::black),
+        Button(245, 10, 225, 105, "Right 7 Rush", pros::Color::peach_puff, pros::Color::black),
+        Button(10, 125, 225, 105, "Right Split", pros::Color::peach_puff, pros::Color::black),
+        Button(245, 125, 225, 105, "Right AWP", pros::Color::peach_puff, pros::Color::black)
     };
 
     switch(autonomousType){
@@ -596,18 +598,13 @@ void autonSelector(void*){
         case 3: autonomousSelection = 0; autonSelected = true; break;
     }
 
+    pros::screen::set_pen(pros::Color::dark_gray);
     while(!autonSelected && autonTypeSelected){
         for(int i = 0; i < 4; i++){
             if(auton[i].isClicked()){
-                if(autonomousType == 0){
-                    autonomousSelection = i * 2 + 1;
-                    auton[i].buttonColor = pros::Color::green;
-                    autonSelected = true;
-                }else if(autonomousType == 1){
-                    autonomousSelection = i * 2 + 2;
-                    auton[i].buttonColor = pros::Color::green;
-                    autonSelected = true;
-                }
+                autonomousSelection = i * 2 + 1 + autonomousType;
+                auton[i].buttonColor = pros::Color::medium_violet_red;
+                autonSelected = true;
             }
             auton[i].render();
         }
