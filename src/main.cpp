@@ -7,7 +7,7 @@
 #include "robot/autos.h"
 
 void initialize(){
-	//pros::lcd::initialize();
+	pros::lcd::initialize();
 	chassis.calibrate();
 
     scraper.set_value(false);
@@ -39,14 +39,7 @@ void autonomous(){
         default: break;
     }
 
-    /*
-    chassis.setPose(0, 0, 0);
-    chassis.turnToHeading(90, 1500);
-    chassis.waitUntilDone();
-    pros::delay(500);
-    
     pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
-    */
 }
 
 void opcontrol(){
@@ -72,23 +65,25 @@ void opcontrol(){
     odomLift.set_value(true);
 
 	while(true){
+        pros::lcd::print(0, "%f", conveyor.get_actual_velocity());
+
         tank();
 
         runningConveyor = false;
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-            if(!ptoActivated){
-                ptoChange();
+            if(trapdoorActivated){
+                conveyorControl(300);
+            }else{
+                if(!ptoActivated){ptoChange();}
+                conveyorControl(600);
             }
-            conveyorControl(600);
             runningConveyor = true;
         }else if(ptoActivated){
             ptoChange();
         }
 
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-            if(!trapdoorActivated){
-                conveyorControl(600);   
-            }else{conveyorControl(450);}
+            conveyorControl(600);
             runningConveyor = true;
         }
 

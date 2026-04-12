@@ -2,7 +2,7 @@
 
 **Carnegie Vanguard High School · Houston, TX · 2025–2026 Season**
 
-[![Robot](https://github.com/JaukG9/285CPushBack/raw/main/robot.jpg)](https://github.com/JaukG9/285CPushBack/blob/main/robot.webp)
+[![Robot](https://github.com/JaukG9/285CPushBack/raw/main/robot.jpg)](https://github.com/JaukG9/285CPushBack/blob/main/robot.jpg)
 
 > **Worlds Qualifiers:** 285C qualified for the 2026 VEX Robotics World Championship, the first time a CVHS Robotics team has done so in over five years. All three 285 sister teams qualified together.
 

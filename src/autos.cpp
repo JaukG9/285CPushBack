@@ -253,30 +253,44 @@ void left_43Split(){
  *
  */
 void right_43Split(){
-    /*get first 3 blocks*/
+    // intake the 3-block stack
     chassis.setPose(-51.5, -10, 120);
-    chassis.moveToPoint(-22, -23, 2000, {.maxSpeed = 70});
+    chassis.chainToPoint(-22, -22, 2000, {.maxSpeed = 70});
     conveyorControl(600);
-    /*extake*/
-    chassis.turnToHeading(230, 2000);
-    chassis.moveToPoint(-5, -5, 2000, {.forwards = false});
+
+    // align with the low goal
+    chassis.chainToHeading(45, 750);
+    chassis.chainToPoint(-5, -5, 1000, {.maxSpeed = 60});
+    chassis.waitUntilDone();
+    intakeFunnel.set_value(true);
+    pros::delay(1500);
+
+    // matchload 3 blocks
+    intakeFunnel.set_value(false);
+    chassis.chainToPoint(-48, -48, 1500);
+    chassis.chainToHeading(270, 750);
+    scraper.set_value(true);
+    chassis.moveToPoint(-999, -48, 1200, {.maxSpeed = 40});
+    chassis.waitUntilDone();
+
+    // align with long goal and score
+    chassis.chainToPoint(-20, -48, 1500, {.forwards = false});
+    chassis.waitUntilDone();
+    chassis.moveToPoint(-15, -48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
-    /*intake from match loader*/
-    chassis.moveToPoint(-45, -48, 2000, {.forwards = false});
-    chassis.moveToPoint(-62, -48, 2000);
-    conveyorControl(600);
-    /*extake*/
-    chassis.moveToPoint(-29, -48, 2000, {.forwards = false});
+
+    // wing blocks into control
     pto.set_value(false);
-    /*maneuver and wing*/
-    chassis.moveToPoint(-33, -59, 2000);
-    chassis.turnToHeading(90, 2000);
     wing.set_value(true);
-    chassis.moveToPoint(-8, -48, 2000, {.forwards = false});
+    chassis.moveToPoint(-35, -47, 750);
+    chassis.chainToHeading(0, 750);
+    chassis.chainToPoint(-35, -35, 750);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-10, -35, 1500, {.forwards = false});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, 48, 200, {.forwards = false});
+        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -384,7 +398,7 @@ void right_awp(){
     chassis.moveToPoint(-99, 48, 1500, {.maxSpeed = 40});
     chassis.waitUntilDone();
     
-    // score in long-goal (6 blocks)
+    // score in long-goal (3 blocks)
     chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
     chassis.moveToPoint(-15, 48, 15000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
@@ -550,7 +564,19 @@ void skills(){
     chassis.setPose(60, 0, 90);
 }
 
-int autonomousSelection = -1;
+
+int autonomousSelection = -1; // auton selection var
+
+/**
+ * @brief displays auton selector so user can select autos from one program
+ *
+ * Uses custom Button object to display 4 buttons to the screen where the user can
+ * choose which auton they use. The first screen displays options of (1) Left,
+ * (2) Right, (3) Skip, and (4) Skills. Options (3) and (4) choose their respective
+ * autonomous routines. Options (1) and (2) display 4 more options which are as
+ * follows (a) 4 Rush, (b) 7 Rush, (c) Split, (d) AWP. In combination with the first
+ * picked option, this chooses the respective autonomous routine.
+ */
 void autonSelector(void*){
     int autonomousType = 0;
     autonomousSelection = -1;
