@@ -28,11 +28,27 @@ class CustomChassis : public lemlib::Chassis{
         float currentX = getPose().x;
         float currentY = getPose().y;
         float distance = std::sqrt(std::pow(x - currentX, 2) + std::pow(y - currentY, 2));
-        float actualMax = std::min((float) params.maxSpeed, 1000 * distance);
-        float minSpeed = actualMax / 2;
-        float earlyExitRange = distance * 15 / 100 * actualMax / 127;
+        float actualMax = std::min((float) std::abs(params.maxSpeed), std::sqrt(1000 * distance));
+        float minSpeed = actualMax / 2 * (params.forwards == false ? 2 : 1);
+        float earlyExitRange = distance * 20 / 100 * actualMax / 127;
 
         moveToPoint(x, y, timeout, 
+                    {.forwards = params.forwards, 
+                     .maxSpeed = params.maxSpeed,
+                     .minSpeed = minSpeed, 
+                     .earlyExitRange = earlyExitRange}, 
+                    async);
+    }
+
+    void chainToPose(float x, float y, float theta, int timeout, ChainToPointParams params = ChainToPointParams(), bool async = true){        
+        float currentX = getPose().x;
+        float currentY = getPose().y;
+        float distance = std::sqrt(std::pow(x - currentX, 2) + std::pow(y - currentY, 2));
+        float actualMax = std::min((float) std::abs(params.maxSpeed), std::sqrt(1000 * distance));
+        float minSpeed = actualMax / 2 * (params.forwards == false ? 2 : 1);
+        float earlyExitRange = distance * 20 / 100 * actualMax / 127;
+
+        moveToPose(x, y, theta, timeout, 
                     {.forwards = params.forwards, 
                      .maxSpeed = params.maxSpeed,
                      .minSpeed = minSpeed, 
@@ -43,9 +59,9 @@ class CustomChassis : public lemlib::Chassis{
     void chainToHeading(float theta, int timeout, ChainToHeadingParams params = ChainToHeadingParams(), bool async = true){
         float currentHeading = getPose().theta;
         float distance = std::abs(currentHeading - theta);
-        float actualMax = std::min((float) params.maxSpeed, 500 * distance);
+        float actualMax = std::min((float) params.maxSpeed, std::sqrt(500 * distance));
         int minSpeed = actualMax / 2;
-        float earlyExitRange = distance * 8 / 100 * actualMax / 127;
+        float earlyExitRange = distance * 10 / 100 * actualMax / 127;
 
         turnToHeading(theta, timeout,
                       {.direction = params.direction,

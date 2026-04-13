@@ -25,36 +25,34 @@ void skip(){
  */
 void left_4Rush(){
     //in-take the 3 block stack
-    chassis.setPose(-50.715, 4.034, 0); /*first position keep exact*/
+    chassis.setPose(-47, 18, 90);
     conveyorControl(600);
-    chassis.chainToHeading(60, 750);
-    chassis.chainToPoint(-22.5, 22, 1500);
-    conveyorBrake();
+    chassis.chainToPoint(-14.86, 23, 1500);
+    pros::delay(500);
+    scraper.set_value(true);
 
     //move to align with the long goal
     chassis.chainToHeading(327, 750);
     chassis.chainToPoint(-41, 48, 1500);
-    conveyorBrake();
-    chassis.chainToHeading(90, 750);
-    chassis.moveToPoint(-20, 48, 1500);
+    scraper.set_value(false);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-30, 48, 1500, {.forwards = false});
     chassis.waitUntilDone();
     
     //back into long goal while extaking
-    chassis.moveToPoint(-15, -48, 2000, {.maxSpeed = 30});
+    chassis.moveToPoint(-15, 48, 2000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
 
     // wing blocks into control
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-30, 58, 1500);
-    chassis.chainToHeading(270, 750);
-    chassis.chainToPoint(-10, 58, 1500, {.forwards = false});
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, 48, 750);
+    chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, 58, 200, {.forwards = false});
+        chassis.moveToPoint(-12, 55, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -68,32 +66,34 @@ void left_4Rush(){
  */
 void right_4Rush(){
     // intake the 3-block stack
-    chassis.setPose(-47, -17.81, 105);
+    chassis.setPose(-47, -18, 90);
     conveyorControl(600);
-    chassis.chainToPoint(-14.86, -24.39, 1500);
+    chassis.chainToPoint(-14.86, -23.39, 1500);
+    pros::delay(500);
+    scraper.set_value(true);
+    wing.set_value(true);
 
     // move to align with long goal
     chassis.chainToHeading(235, 750);
-    chassis.moveToPoint(-48, -48, 1500);
+    chassis.chainToPoint(-40, -48, 1500);
+    scraper.set_value(false);
     chassis.chainToHeading(270, 750);
-    chassis.moveToPoint(-20, -48, 1200, {.forwards = false});
-    chassis.waitUntilDone();
+    chassis.chainToPoint(-30, -48, 1200, {.forwards = false});
 
     // back into long goal while extaking
-    chassis.moveToPoint(-15, -48, 2000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-15, -48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
 
     // wing blocks into control
-    chassis.chainToPoint(-42, -48, 1000);
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.chainToHeading(240, 750);
-    chassis.chainToPoint(-25, -35, 1500, {.forwards = false});
-    chassis.turnToHeading(270, 750);
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, -48, 750);
+    chassis.chainToPose(-35, -40, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, -40, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-25, -35, 200, {.forwards = false});
+        chassis.moveToPoint(-12, -41, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -130,15 +130,13 @@ void left_7Rush(){
 
     // wing blocks into control
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.moveToPoint(-30, 47, 1500, {.forwards = false});
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-30, 58, 1500);
-    chassis.chainToHeading(270, 750);
-    chassis.chainToPoint(-10, 58, 1500, {.forwards = false});
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, 48, 750);
+    chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, 58, 200, {.forwards = false});
+        chassis.moveToPoint(-12, 55, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -154,36 +152,37 @@ void left_7Rush(){
  */
 void right_7Rush(){
     // intake the 3-block stack
-    chassis.setPose(-47, -12, 110);
+    chassis.setPose(-47, -18, 90);
     conveyorControl(600);
-    chassis.chainToPoint(-22, -22, 1500);
-    chassis.chainToHeading(222, 750);
-
-    // move to align with long goal omt
-    chassis.chainToPoint(-48, -47, 1500);
-    chassis.chainToHeading(270, 750);
+    chassis.chainToPoint(-14.86, -23, 1500);
+    pros::delay(600);
     scraper.set_value(true);
-    chassis.moveToPoint(-99, -47, 300, {.maxSpeed = 40});
+    wing.set_value(true);
+
+    // move to align with long goal intaking only 3 blocks
+    chassis.chainToHeading(235, 750);
+    chassis.chainToPoint(-48, -48, 1500);
+    chassis.chainToHeading(270, 750);
+    chassis.moveToPoint(-99, -47, 1000, {.maxSpeed = 40});
     chassis.waitUntilDone();
 
     // back into long goal while extaking
-    chassis.moveToPoint(-35, -47, 1500, {.forwards = false});
+    chassis.moveToPoint(-30, -47, 1500, {.forwards = false});
     chassis.waitUntilDone();
     chassis.moveToPoint(-15, -47, 2000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
+    conveyorBrake();
     
     // wing blocks into control
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.moveToPoint(-35, -47, 750);
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-35, -35, 750);
-    chassis.chainToHeading(270, 750);
-    chassis.chainToPoint(-10, -35, 1500, {.forwards = false});
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, -48, 750);
+    chassis.chainToPose(-35, -40, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, -40, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
+        chassis.moveToPoint(-12, -41, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -230,15 +229,14 @@ void left_43Split(){
     chassis.waitUntilDone();
 
     // wing blocks into control
-    chassis.chainToPoint(-42, 48, 1000);
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.chainToHeading(240, 750);
-    chassis.chainToPoint(-25, 61, 1500, {.forwards = false});
-    chassis.turnToHeading(270, 750);
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, 48, 750);
+    chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, 61, 200, {.forwards = false});
+        chassis.moveToPoint(-12, 55, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -282,15 +280,13 @@ void right_43Split(){
 
     // wing blocks into control
     pto.set_value(false);
-    wing.set_value(true);
-    chassis.moveToPoint(-35, -47, 750);
-    chassis.chainToHeading(0, 750);
-    chassis.chainToPoint(-35, -35, 750);
-    chassis.chainToHeading(270, 750);
-    chassis.chainToPoint(-10, -35, 1500, {.forwards = false});
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, -48, 750);
+    chassis.chainToPose(-35, -40, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, -40, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-4, -35, 200, {.forwards = false});
+        chassis.moveToPoint(-12, -41, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -343,6 +339,18 @@ void left_awp(){
     pto.set_value(true);
     pros::delay(1000);
     pto.set_value(false);
+
+    // wing blocks into control
+    pto.set_value(false);
+    scraper.set_value(false);
+    chassis.moveToPoint(-42, 48, 750);
+    chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 80});
+    wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-12, 55, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
 }
 
 /**
