@@ -101,10 +101,9 @@ void right_4Rush(){
 /**
  * @brief runs the left side 7 block rush autonomous.
  *
- *
- *
- *
- *
+ * Intakes the group of 3-block stacks that start on the left side of the field and intakes
+ * another 3 blocks from the matchloader and extakes all 7 into the long goal including preload.
+ * Then, wings the blocks into control.
  *
  */
 void left_7Rush(){
@@ -142,12 +141,11 @@ void left_7Rush(){
 }
 
 /**
- * @brief runs the right side 7 block rush autonomous.
+ * @brief Runs the right side 7-block rush autonomous.
  *
- *
- *
- *
- *
+ * Intakes a group of 3-block stacks on the right side of the field, along with
+ * 3 blocks from the match loader, and extakes all 7 into the long goal including the preload.
+ * Then, wings the blocks into the control zone.
  *
  */
 void right_7Rush(){
@@ -190,9 +188,9 @@ void right_7Rush(){
 /**
  * @brief runs the left side 4-3 split autonomous.
  *
- *
- *
- *
+ * Intakes the 3-block stack on the left side of the field and extakes them into
+ * the mid goal. Then match loads 3 blocks from the match loader and extakes them
+ * into the long goal. Finally, wings the remaining blocks into the control zone.
  *
  *
  */
@@ -244,9 +242,9 @@ void left_43Split(){
 /**
  * @brief runs the right side 4-3 split autonomous.
  *
- *
- *
- *
+ * Intakes the 3-block stack on the right side of the field and scores them into
+ * the low goal. Then match loads 3 blocks from the match loader and extakes them
+ * into the long goal. Finally, wings the remaining blocks into the control zone.
  *
  *
  */
@@ -294,7 +292,7 @@ void right_43Split(){
 /**
  * @brief runs the solo AWP (left side).
  *
- *
+ * 
  *
  *
  *
@@ -356,9 +354,10 @@ void left_awp(){
 /**
  * @brief runs the solo AWP (right side).
  *
- *
- *
- *
+ * Intakes three blocks from the match loader and extakes them into the long goal along with
+ * the preload. Then picks up three blocks from the three stacks twice and extakes
+ * them into the mid goal. Finally, intakes three blocks from the match loader and extakes
+ * six blocks into the long goal.
  *
  *
  */
@@ -406,7 +405,7 @@ void right_awp(){
     chassis.moveToPoint(-99, 48, 1500, {.maxSpeed = 40});
     chassis.waitUntilDone();
     
-    // score in long-goal (3 blocks)
+    // score in long-goal (6 blocks)
     chassis.moveToPoint(-30, 48, 1500, {.forwards = false});
     chassis.moveToPoint(-15, 48, 15000, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
@@ -417,10 +416,11 @@ void right_awp(){
 /**
  * @brief runs the programming skills autonomous.
  *
- *
- *
- *
- *
+ * Parks in the alliance parking zone and intakes the parking blocks, then picks up
+ * and scores a block from the 4-stack into the mid goal. Intakes the 4-stack on the
+ * opposite side and extakes into the long goal, then match loads and extakes blocks
+ * across both long goals twice. Finally, scores in the mid goal, repeats the match load
+ * and extake cycle, and parks in the alliance parking zone.
  *
  */
 void skills(){
