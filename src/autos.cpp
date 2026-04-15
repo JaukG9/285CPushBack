@@ -203,14 +203,14 @@ void left_43Split(){
     chassis.setPose(-47, 18, 90);
     conveyorControl(600);
     chassis.chainToPoint(-14.86, 22.2, 1500);
-    pros::delay(500);
+    pros::delay(550);
     scraper.set_value(true);
     wing.set_value(true);
 
     // align with the middle goal
     chassis.chainToPose(-15, 15, 315, 1250, {.forwards = false});
     chassis.moveToPoint(-5, 5, 670, {.forwards = false, .maxSpeed = 80});
-    pros::delay(200);
+    pros::delay(750);
     trapdoor.set_value(true);
     chassis.waitUntilDone();
 
@@ -286,7 +286,7 @@ void right_43Split(){
     chassis.waitUntilDone();
 
     // align with long goal and score
-    chassis.chainToPoint(-33, -48, 1500, {.forwards = false});
+    chassis.chainToPoint(-35, -48, 1500, {.forwards = false});
     chassis.waitUntilDone();
     chassis.moveToPoint(-15, -48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
@@ -317,55 +317,60 @@ void right_43Split(){
  */
 void left_awp(){
     // intake the matchloader
-    chassis.setPose(-55, 16, 0);
-    chassis.chainToPoint(-55, 48, 1000);
-    chassis.chainToHeading(270, 750);
+    chassis.setPose(-48, 17.5, 0);
+    chassis.chainToPoint(-48, 43, 1000);
     scraper.set_value(true);
+    chassis.chainToHeading(270, 750);
     conveyorControl(600);
-    chassis.moveToPoint(-100, 48, 1500, {.maxSpeed = 40});
-    chassis.chainToPoint(-34.5, 48, 1500, {.forwards = false});
+    chassis.moveToPoint(-80, 48, 1000, {.maxSpeed = 40});
     chassis.waitUntilDone();
+    scraper.set_value(false);
     
     // move to align with long goal & score
+    chassis.chainToPoint(-35, 48, 700, {.forwards = false});
     chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
-    pros::delay(1000);
-    pto.set_value(false);
+    chassis.waitUntilDone();
+    chassis.chainToPoint(-40, 48, 750);
     
-    //intake the 3-block stack x2
-    chassis.chainToPoint(-34.5, 48, 1500);
-    chassis.turnToHeading(154, 750);
-    chassis.chainToPoint(-22.5, 22, 1000);
-    chassis.turnToHeading(180, 750);
+    //intake the 3-block stack
+    pto.set_value(false);
+    chassis.chainToPoint(-25, 25, 800);
+    chassis.moveToPose(-15, 15, 135, 800);
+    pros::delay(300);
+    scraper.set_value(true);
+    chassis.chainToHeading(315, 700);
+    conveyorBrake();
+    chassis.waitUntilDone();
+    scraper.set_value(false);
 
     // score in mid-top goal
-    chassis.chainToPoint(-22.5, 22, 1500);
-    chassis.turnToHeading(227.5, 750);
-    chassis.moveToPoint(0, 0, 1500, {.forwards = false});
-    pto.set_value(true);
-    pros::delay(1000);
-    pto.set_value(false);
+    chassis.moveToPose(0, 0, 315, 300, {.forwards = false, .maxSpeed = 60});
+    chassis.waitUntilDone();
+    trapdoor.set_value(true);
+    conveyorControl(600);
+    pros::delay(1250);
 
-    // intake the matchloader
-    chassis.chainToPoint(-47, -48, 2000);
-    chassis.turnToHeading(270, 750);
-    chassis.moveToPoint(-100, -48, 1500, {.maxSpeed = 40});
-    chassis.chainToPoint(-33, -48, 1500, {.forwards = false, .maxSpeed = 30});
-    pto.set_value(true);
-    pros::delay(1000);
-    pto.set_value(false);
+    // 3-block stack intake
+    chassis.chainToPoint(-20, 20, 750);
+    chassis.moveToPoint(-24, -28, 1300);
+    trapdoor.set_value(false);
+    pros::delay(1200);
+    scraper.set_value(true);
 
-    // wing blocks into control
-    pto.set_value(false);
-    scraper.set_value(false);
-    chassis.moveToPoint(-42, 48, 750);
-    chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
-    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 80});
-    wing.set_value(false);
-    while(true){
-        chassis.moveToPoint(-12, 55, 200, {.forwards = false});
-        chassis.waitUntilDone();
-    }
+    // intake matchloader
+    chassis.chainToHeading(250, 750);
+    chassis.chainToPoint(-53, -45, 1000);
+    chassis.chainToHeading(270, 750);
+    pros::delay(300);
+    chassis.moveToPoint(-100, -45, 800, {.maxSpeed = 40});
+    
+
+    // align with long goal and score
+    chassis.chainToPoint(-40, -45, 1500, {.forwards = false});
+    chassis.moveToPoint(-15, -45, 1500, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
 }
 
 /**
