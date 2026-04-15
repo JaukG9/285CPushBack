@@ -363,12 +363,12 @@ void left_awp(){
     chassis.chainToPoint(-53, -45, 1000);
     chassis.chainToHeading(270, 750);
     pros::delay(300);
-    chassis.moveToPoint(-100, -45, 800, {.maxSpeed = 40});
+    chassis.moveToPoint(-100, -45.5, 800, {.maxSpeed = 40});
     
 
     // align with long goal and score
-    chassis.chainToPoint(-40, -45, 1500, {.forwards = false});
-    chassis.moveToPoint(-15, -45, 1500, {.forwards = false, .maxSpeed = 30});
+    chassis.chainToPoint(-40, -45.5, 1500, {.forwards = false});
+    chassis.moveToPoint(-15, -45.5, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
 }
