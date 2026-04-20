@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Chaos",
+    "project_name": "Test Program",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -637,7 +637,7 @@
     "upload_options": {
       "description": "285C Pushback",
       "icon": "pizza",
-      "slot": 1
+      "slot": 3
     },
     "use_early_access": false
   }
