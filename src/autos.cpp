@@ -104,7 +104,6 @@ void right_4Rush(){
  * Intakes the group of 3-block stacks that start on the left side of the field and intakes
  * another 3 blocks from the matchloader and extakes all 7 into the long goal including preload.
  * Then, wings the blocks into control.
- *
  */
 void left_7Rush(){
     // intake the 3-block stack
@@ -146,7 +145,6 @@ void left_7Rush(){
  * Intakes a group of 3-block stacks on the right side of the field, along with
  * 3 blocks from the match loader, and extakes all 7 into the long goal including the preload.
  * Then, wings the blocks into the control zone.
- *
  */
 void right_7Rush(){
     // intake the 3-block stack
@@ -191,8 +189,6 @@ void right_7Rush(){
  * Intakes the 3-block stack on the left side of the field and extakes them into
  * the mid goal. Then match loads 3 blocks from the match loader and extakes them
  * into the long goal. Finally, wings the remaining blocks into the control zone.
- *
- *
  */
 void left_43Split(){
     // intake the 3-block stack
@@ -245,8 +241,6 @@ void left_43Split(){
  * Intakes the 3-block stack on the right side of the field and scores them into
  * the low goal. Then match loads 3 blocks from the match loader and extakes them
  * into the long goal. Finally, wings the remaining blocks into the control zone.
- *
- *
  */
 void right_43Split(){
     // intake the 3-block stack
@@ -358,10 +352,7 @@ void left_awp(){
  * the preload. Then picks up three blocks from the three stacks twice and extakes
  * them into the mid goal. Finally, intakes three blocks from the match loader and extakes
  * six blocks into the long goal.
- *
- *
  */
-
 void right_awp(){
     // intake matchloader
     chassis.setPose(-55, -8, 180);
@@ -421,7 +412,6 @@ void right_awp(){
  * opposite side and extakes into the long goal, then match loads and extakes blocks
  * across both long goals twice. Finally, scores in the mid goal, repeats the match load
  * and extake cycle, and parks in the alliance parking zone.
- *
  */
 void skills(){
 /* 117 Route attempt skills auton*/
