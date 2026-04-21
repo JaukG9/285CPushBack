@@ -23,8 +23,8 @@ void initialize(){
 void disabled(){}
 
 void autonomous(){
-    //pros::screen::erase();
-    autonomousSelection = 1;
+    pros::screen::erase();
+    //autonomousSelection = 3;
 
     switch(autonomousSelection){
         case 0: skip(); break;
@@ -40,7 +40,7 @@ void autonomous(){
         default: break;
     }
 
-    pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
+    //pros::lcd::print(0, "%f %f %f", chassis.getPose().x, chassis.getPose().y, chassis.getPose().theta);
 }
 
 void opcontrol(){

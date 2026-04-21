@@ -14,6 +14,7 @@ struct ChainParams{
 struct ChainToPointParams{
     bool forwards = true;
     float maxSpeed = 127;
+    bool minSpeed = true;
 };
 struct ChainToHeadingParams{
     AngularDirection direction = AngularDirection::AUTO;
@@ -31,6 +32,7 @@ class CustomChassis : public lemlib::Chassis{
         float actualMax = std::min((float) std::abs(params.maxSpeed), std::sqrt(1000 * distance));
         float minSpeed = actualMax / 2 * (params.forwards == false ? 2 : 1);
         float earlyExitRange = distance * 20 / 100 * actualMax / 127;
+        if(!params.minSpeed){minSpeed = 0;}
 
         moveToPoint(x, y, timeout, 
                     {.forwards = params.forwards, 
