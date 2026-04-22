@@ -24,7 +24,6 @@ void disabled(){}
 
 void autonomous(){
     pros::screen::erase();
-    //autonomousSelection = 3;
 
     switch(autonomousSelection){
         case 0: skip(); break;

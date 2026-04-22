@@ -70,7 +70,7 @@ void right_4Rush(){
     chassis.setPose(-47, -18, 90);
     conveyorControl(600);
     chassis.chainToPoint(-14.86, -23.39, 1500);
-    pros::delay(500);
+    pros::delay(450);
     scraper.set_value(true);
     wing.set_value(true);
 
@@ -116,11 +116,11 @@ void left_7Rush(){
     wing.set_value(true);
 
     //move to align with the long goal
-    chassis.chainToHeading(315, 750);
-    chassis.chainToPoint(-48, 48, 1000);
-    chassis.chainToHeading(270, 750);
+    chassis.chainToHeading(315, 1000);
+    chassis.chainToPoint(-48, 48, 850);
+    chassis.chainToHeading(270, 500);
     scraper.set_value(true);
-    chassis.moveToPoint(-100, 47, 950, {.maxSpeed = 40});
+    chassis.moveToPoint(-100, 47, 1050, {.maxSpeed = 40});
 
     // back into long goal while extaking
     chassis.chainToPoint(-35, 47, 1500, {.forwards = false});
@@ -134,8 +134,9 @@ void left_7Rush(){
     chassis.moveToPoint(-42, 48, 750);
     chassis.chainToPose(-35, 56, 270, 1500, {.forwards = false, .maxSpeed = 80});
     chassis.chainToPoint(-20, 56, 1500, {.forwards = false, .maxSpeed = 80});
-    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 50});
+    pros::delay(750);
     wing.set_value(false);
+    chassis.chainToPoint(-12, 56, 1500, {.forwards = false, .maxSpeed = 50});
     while(true){
         chassis.moveToPoint(-12, 55, 200, {.forwards = false});
         chassis.waitUntilDone();
