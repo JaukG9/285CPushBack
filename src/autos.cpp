@@ -197,23 +197,23 @@ void right_7Rush(){
  */
 void left_43Split(){
     //in-take the 3 block stack
-    chassis.setPose(-47, 18, 90);
+    chassis.setPose(-47, 17.5, 90);
     conveyorControl(600);
-    chassis.chainToPoint(-14.86, 22.2, 1500);
+    chassis.chainToPoint(-14.86, 21.7, 1500);
     pros::delay(467);
     scraper.set_value(true);
     wing.set_value(true);
 
     // align with the middle goal
-    chassis.chainToPose(-15, 15, 315, 1250, {.forwards = false});
-    chassis.moveToPoint(-12, 12, 670, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPose(-15, 14.5, 315, 1250, {.forwards = false});
+    chassis.moveToPoint(-12, 11.5, 670, {.forwards = false, .maxSpeed = 80});
     pros::delay(600);
     trapdoor.set_value(true);
     chassis.waitUntilDone();
-    conveyorControl(450);
+    conveyorControl(500);
 
     // back into mid goal while extaking
-    chassis.moveToPoint(-10, 10, 2000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-11, 10.5, 2000, {.forwards = false, .maxSpeed = 30});
     chassis.waitUntilDone();
 
     // matchload 3 blocks
@@ -226,9 +226,9 @@ void left_43Split(){
     chassis.waitUntilDone();
 
     // back into long goal while extaking
-    chassis.moveToPoint(-30, 48.5, 1500, {.forwards = false});
+    chassis.moveToPoint(-30, 48, 1000, {.forwards = false});
     chassis.waitUntilDone();
-    chassis.moveToPoint(-15, 48.5, 2000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
     conveyorBrake();
@@ -236,12 +236,12 @@ void left_43Split(){
     // wing blocks into control
     pto.set_value(false);
     scraper.set_value(false);
-    chassis.moveToPoint(-42, 49, 750);
-    chassis.chainToPose(-35, 57, 270, 1500, {.forwards = false, .maxSpeed = 80});
-    chassis.chainToPoint(-12, 57, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(-42, 48.5, 750);
+    chassis.chainToPose(-35, 56.5, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56.5, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
     while(true){
-        chassis.moveToPoint(-11, 56, 200, {.forwards = false});
+        chassis.moveToPoint(-11, 55.5, 200, {.forwards = false});
         chassis.waitUntilDone();
     }
 }
@@ -314,7 +314,7 @@ void right_43Split(){
  */
 void left_awp(){
     // intake the matchloader
-    chassis.setPose(-48, 17.5, 0);
+    chassis.setPose(-48, 16, 0);
     chassis.chainToPoint(-48, 43, 1000);
     scraper.set_value(true);
     chassis.chainToHeading(270, 750);
@@ -334,7 +334,7 @@ void left_awp(){
     pto.set_value(false);
     chassis.chainToPoint(-25, 25, 800);
     chassis.moveToPose(-15, 15, 135, 800);
-    pros::delay(350);
+    pros::delay(300);
     scraper.set_value(true);
     chassis.chainToHeading(315, 700);
     conveyorBrake();
