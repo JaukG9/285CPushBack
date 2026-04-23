@@ -26,15 +26,15 @@ void autonomous(){
     pros::screen::erase();
 
     switch(autonomousSelection){
-        case 0: skip(); break;
+        case 0: left_awp(); break;
         case 1: left_4Rush(); break;
         case 2: right_4Rush(); break;
         case 3: left_7Rush(); break;
         case 4: right_7Rush(); break;
         case 5: left_43Split(); break;
         case 6: right_43Split(); break;
-        case 7: left_awp(); break;
-        case 8: right_awp(); break;
+        case 7: left_longSplit(); break;
+        case 8: right_longSplit(); break;
         case 9: skills(); break;
         default: break;
     }

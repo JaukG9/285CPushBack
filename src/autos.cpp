@@ -303,6 +303,99 @@ void right_43Split(){
     }
 }
 
+void left_longSplit(){
+    // intake the matchloader
+    chassis.setPose(-48, 16, 0);
+    chassis.chainToPoint(-48, 43, 1000);
+    scraper.set_value(true);
+    chassis.chainToHeading(270, 750);
+    conveyorControl(600);
+    chassis.moveToPoint(-80, 48, 1000, {.maxSpeed = 40});
+    chassis.waitUntilDone();
+    scraper.set_value(false);
+    
+    // move to align with long goal & score
+    chassis.chainToPoint(-35, 48, 700, {.forwards = false});
+    chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+    chassis.chainToPoint(-40, 48, 750);
+    
+    //intake the 3-block stack
+    pto.set_value(false);
+    chassis.chainToPoint(-25, 25, 800);
+    chassis.moveToPose(-15, 15, 135, 800);
+    pros::delay(300);
+    scraper.set_value(true);
+    chassis.chainToHeading(315, 700);
+    conveyorBrake();
+    chassis.waitUntilDone();
+    scraper.set_value(false);
+
+    // score in mid-top goal
+    chassis.moveToPose(0, 0, 315, 1500, {.forwards = false, .maxSpeed = 50});
+    trapdoor.set_value(true);
+    conveyorControl(500);
+    chassis.waitUntilDone();
+
+    // move to long-goal + wing
+    chassis.chainToPoint(-48, 48, 750);
+    chassis.chainToHeading(270, 750);
+    chassis.chainToPose(-35, 56.5, 270, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, 56.5, 1500, {.forwards = false, .maxSpeed = 80});
+    wing.set_value(false);
+    while(true){
+        chassis.moveToPoint(-11, 55.5, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
+}
+
+void right_longSplit(){
+    // intake the matchloader
+    chassis.setPose(-48, -16, 180);
+    chassis.chainToPoint(-48, -43, 1000);
+    scraper.set_value(true);
+    chassis.chainToHeading(270, 750);
+    conveyorControl(600);
+    chassis.moveToPoint(-80, -48, 1000, {.maxSpeed = 40});
+    chassis.waitUntilDone();
+    scraper.set_value(false);
+    
+    // move to align with long goal & score
+    chassis.chainToPoint(-35, -48, 700);
+    chassis.moveToPoint(-15, -48, 1500, {.maxSpeed = 30});
+    pto.set_value(true);
+    chassis.waitUntilDone();
+    chassis.chainToPoint(-40, -48, 750);
+    
+    //intake the 3-block stack
+    pto.set_value(false);
+    chassis.chainToPoint(-25, -25, 800);
+    chassis.moveToPose(-15, -15, 45, 800);
+    pros::delay(300);
+    scraper.set_value(true);
+    conveyorBrake();
+    chassis.waitUntilDone();
+    scraper.set_value(false);
+
+    // score in mid-bottom goal
+    chassis.moveToPose(-9, -8, 45, 1500, {.maxSpeed = 50});
+    conveyorControl(-400);
+    intakeFunnel.set_value(true);
+    chassis.waitUntilDone();
+
+    // move to long-goal + wing
+    chassis.chainToPoint(-48, -48, 750, {.forwards = false});
+    chassis.chainToPose(-35, -39, 270, 1500, {.forwards = false});
+    wing.set_value(false);
+    chassis.chainToPoint(-12, -39, 1500, {.forwards = false, .maxSpeed = 80});
+    chassis.chainToPoint(-12, -40, 1500, {.forwards = false, .maxSpeed = 40});
+    while(true){
+        chassis.moveToPoint(-12, -41, 200, {.forwards = false});
+        chassis.waitUntilDone();
+    }
+}
+
 /**
  * @brief runs the solo AWP (left side).
  *
@@ -596,7 +689,7 @@ void autonSelector(void*){
     Button autonType[] = {
         Button(10, 10, 225, 105, "Left", pros::Color::pale_violet_red, pros::Color::black),
         Button(245, 10, 225, 105, "Right", pros::Color::cyan, pros::Color::black),
-        Button(10, 125, 225, 105, "Skip", pros::Color::white, pros::Color::black),
+        Button(10, 125, 225, 105, "AWP (Left)", pros::Color::white, pros::Color::black),
         Button(245, 125, 225, 105, "Skills", pros::Color::light_green, pros::Color::black)
     };
 
@@ -619,13 +712,13 @@ void autonSelector(void*){
         Button(10, 10, 225, 105, "Left 4 Rush", pros::Color::peach_puff, pros::Color::black),
         Button(245, 10, 225, 105, "Left 7 Rush", pros::Color::peach_puff, pros::Color::black),
         Button(10, 125, 225, 105, "Left Split", pros::Color::peach_puff, pros::Color::black),
-        Button(245, 125, 225, 105, "Left AWP", pros::Color::peach_puff, pros::Color::black)
+        Button(245, 125, 225, 105, "Left Long-F", pros::Color::peach_puff, pros::Color::black)
     };
     static Button rightAutons[] = {
         Button(10, 10, 225, 105, "Right 4 Rush", pros::Color::peach_puff, pros::Color::black),
         Button(245, 10, 225, 105, "Right 7 Rush", pros::Color::peach_puff, pros::Color::black),
         Button(10, 125, 225, 105, "Right Split", pros::Color::peach_puff, pros::Color::black),
-        Button(245, 125, 225, 105, "Right AWP", pros::Color::peach_puff, pros::Color::black)
+        Button(245, 125, 225, 105, "Right Long-F", pros::Color::peach_puff, pros::Color::black)
     };
 
     switch(autonomousType){
