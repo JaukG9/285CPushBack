@@ -334,6 +334,7 @@ void left_longSplit(){
 
     // score in mid-top goal
     chassis.moveToPose(0, 0, 315, 1500, {.forwards = false, .maxSpeed = 50});
+    pros::delay(700); // Added for longer mid-top (above is original number)
     trapdoor.set_value(true);
     conveyorControl(500);
     chassis.waitUntilDone();
@@ -380,6 +381,7 @@ void right_longSplit(){
 
     // score in mid-bottom goal
     chassis.moveToPose(-9, -8, 45, 1500, {.maxSpeed = 50});
+    pros::delay(700); // Added for longer mid-bottom (above is original number)
     conveyorControl(-400);
     intakeFunnel.set_value(true);
     chassis.waitUntilDone();
