@@ -206,29 +206,29 @@ void left_43Split(){
 
     // align with the middle goal
     chassis.chainToPose(-15, 14.5, 315, 1250, {.forwards = false});
-    chassis.moveToPoint(-12, 11.5, 670, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(-13, 12.5, 1000, {.forwards = false, .maxSpeed = 80});
     pros::delay(600);
     trapdoor.set_value(true);
     chassis.waitUntilDone();
-    conveyorControl(500);
 
     // back into mid goal while extaking
-    chassis.moveToPoint(-11, 10.5, 2000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-11, 10.5, 1500, {.forwards = false, .maxSpeed = 30});
+    pros::delay(300);
+    conveyorControl(450);
     chassis.waitUntilDone();
 
     // matchload 3 blocks
-    chassis.chainToPoint(-48, 48.5, 1500);
+    chassis.chainToPoint(-48, 49, 1100);
     trapdoor.set_value(false);
     chassis.chainToHeading(270, 750);
-    scraper.set_value(true);
+    scraper.set_value(true); 
     conveyorControl(600);
-    chassis.moveToPoint(-99, 48.5, 1000, {.maxSpeed = 40});
+    chassis.moveToPoint(-99, 49, 1100, {.maxSpeed = 40});
     chassis.waitUntilDone();
 
     // back into long goal while extaking
     chassis.moveToPoint(-30, 48, 1000, {.forwards = false});
-    chassis.waitUntilDone();
-    chassis.moveToPoint(-15, 48, 1500, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(-15, 48, 1250, {.forwards = false, .maxSpeed = 30});
     pto.set_value(true);
     chassis.waitUntilDone();
     conveyorBrake();
@@ -236,7 +236,7 @@ void left_43Split(){
     // wing blocks into control
     pto.set_value(false);
     scraper.set_value(false);
-    chassis.moveToPoint(-42, 48.5, 750);
+    chassis.moveToPoint(-42, 48.5, 500);
     chassis.chainToPose(-35, 56.5, 270, 1500, {.forwards = false, .maxSpeed = 80});
     chassis.chainToPoint(-12, 56.5, 1500, {.forwards = false, .maxSpeed = 80});
     wing.set_value(false);
@@ -439,7 +439,7 @@ void right_awp(){
  */
 void skills(){
     //in-take the 3 block stack
-    chassis.setPose(-47, 18, 90);
+    chassis.setPose(-47, 18.5, 90);
     conveyorControl(600);
     chassis.chainToPoint(-14.86, 22.7, 1500);
     pros::delay(467);
@@ -448,8 +448,9 @@ void skills(){
 
     // align with the middle goal
     chassis.chainToPose(-15, 15, 315, 1250, {.forwards = false});
-    chassis.moveToPoint(-5, 5, 670, {.forwards = false, .maxSpeed = 80});
+    chassis.moveToPoint(-12, 12, 800, {.forwards = false, .maxSpeed = 80});
     conveyorBrake();
+    pros::delay(450);
     trapdoor.set_value(true);
     chassis.waitUntilDone();
     conveyorControl(500);
@@ -486,27 +487,26 @@ void skills(){
     
     // Matchload all blocks
     scraper.set_value(true);
-    chassis.moveToPoint(54, 48, 1000);
-    chassis.moveToPoint(99, 48, 3000, {.maxSpeed = 40});
-    chassis.moveToPoint(25, 48, 1000, {.forwards = false});
+    chassis.moveToPoint(54, 46, 1000);
+    chassis.moveToPoint(99, 46, 3000, {.maxSpeed = 40});
+    chassis.moveToPoint(25, 46, 1000, {.forwards = false});
     chassis.waitUntilDone();
     pto.set_value(true);
     scraper.set_value(false);
-    chassis.moveToPoint(5, 48, 1500, {.forwards = false, .maxSpeed = 10});
+    chassis.moveToPoint(5, 46, 1500, {.forwards = false, .maxSpeed = 10});
     chassis.waitUntilDone();
     pto.set_value(false);
-    chassis.setPose(30, 48, 90);
+    chassis.setPose(28, 48, 90);
 
     // Clear opponent side parking
-    chassis.moveToPoint(42, 48, 750);
+    chassis.moveToPoint(38, 48, 750);
     chassis.chainToHeading(180, 750);
-    chassis.moveToPoint(42, -1, 1500);
+    chassis.moveToPoint(38, 0, 1500);
     chassis.turnToHeading(90, 750);
     odomLift.set_value(true);
-    chassis.moveToPoint(99, -1, 2000, {.maxSpeed = 60});
+    chassis.moveToPoint(99, 0, 2000, {.maxSpeed = 60});
     conveyorControl(600);
-    chassis.moveToPoint(50, -1, 1500, {.forwards = false});
-    chassis.chainToPoint(45, -1, 1500, {.forwards = false});
+    chassis.chainToPoint(45, 0, 1500, {.forwards = false});
 
     // Score mid goal
     chassis.chainToHeading(215, 750);
@@ -517,9 +517,8 @@ void skills(){
     chassis.chainToHeading(135, 750);
     chassis.moveToPoint(12, -12, 1500, {.forwards = false});
     chassis.waitUntilDone();
-    conveyorControl(300);
+    conveyorControl(500);
     trapdoor.set_value(true);
-    pto.set_value(true);
     chassis.moveToPoint(8, -8, 1500, {.forwards = false, .maxSpeed = 40});
     chassis.waitUntilDone();
 
@@ -573,7 +572,7 @@ void skills(){
     chassis.moveToPoint(99, 0, 2000, {.maxSpeed = 60});
     conveyorControl(600);
     chassis.waitUntilDone();
-    chassis.setPose(60, 0, 90);
+    chassis.moveToPoint(99, 0, 10000);
 }
 
 
@@ -632,8 +631,8 @@ void autonSelector(void*){
     switch(autonomousType){
         case 0: auton = leftAutons; break;
         case 1: auton = rightAutons; break;
-        case 2: autonomousSelection = 9; autonSelected = true; break;
-        case 3: autonomousSelection = 0; autonSelected = true; break;
+        case 2: autonomousSelection = 0; autonSelected = true; break;
+        case 3: autonomousSelection = 9; autonSelected = true; break;
     }
 
     pros::screen::set_pen(pros::Color::dark_gray);

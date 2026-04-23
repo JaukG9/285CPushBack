@@ -72,7 +72,7 @@ void opcontrol(){
         runningConveyor = false;
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
             if(trapdoorActivated){
-                conveyorControl(300);
+                conveyorControl(500);
             }else{
                 if(!ptoActivated){ptoChange();}
                 conveyorControl(600);
